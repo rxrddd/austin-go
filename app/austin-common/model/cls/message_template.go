@@ -1,0 +1,51 @@
+package cls
+
+var ClsMessageTemplate = struct {
+	ID             string
+	Name           string
+	AuditStatus    string
+	FlowID         string
+	MsgStatus      string
+	CronTaskID     string
+	CronCrowdPath  string
+	ExpectPushTime string
+	IDType         string
+	SendChannel    string
+	TemplateType   string
+	MsgType        string
+	ShieldType     string
+	MsgContent     string
+	SendAccount    string
+	Creator        string
+	Updator        string
+	Auditor        string
+	Team           string
+	Proposer       string
+	IsDeleted      string
+	Created        string
+	Updated        string
+}{
+	ID:             "id",
+	Name:           "name",
+	AuditStatus:    "audit_status",
+	FlowID:         "flow_id",
+	MsgStatus:      "msg_status",
+	CronTaskID:     "cron_task_id",
+	CronCrowdPath:  "cron_crowd_path",
+	ExpectPushTime: "expect_push_time",
+	IDType:         "id_type",
+	SendChannel:    "send_channel",
+	TemplateType:   "template_type",
+	MsgType:        "msg_type",
+	ShieldType:     "shield_type",
+	MsgContent:     "msg_content",
+	SendAccount:    "send_account",
+	Creator:        "creator",
+	Updator:        "updator",
+	Auditor:        "auditor",
+	Team:           "team",
+	Proposer:       "proposer",
+	IsDeleted:      "is_deleted",
+	Created:        "created",
+	Updated:        "updated",
+}

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package austin;
+
+message SendRequest {
+  string Code = 1;
+  int64 MessageTemplateId = 2;
+  MessageParam MessageParam = 3;
+}
+
+message MessageParam {
+  string Receiver = 1;
+  map<string, string> Variables = 2;
+  map<string, string> Extra = 3;
+}
+
+message SendResponse {
+  string Code = 1;
+}
+
+service Austin {
+  rpc Send(SendRequest) returns(SendResponse);
+}

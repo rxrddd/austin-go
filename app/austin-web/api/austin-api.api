@@ -1,0 +1,21 @@
+type SendRequest {
+	Code              string       `json:"code"`
+	MessageTemplateId int64        `json:"messageTemplateId"`
+	MessageParam      MessageParam `json:"messageParam"`
+}
+type MessageParam {
+	Receiver  string            `json:"receiver"`           //接收者 多个用,逗号号分隔开
+	Variables map[string]string `json:"variables,optional"` //可选 消息内容中的可变部分(占位符替换)
+	Extra     map[string]string `json:"extra,optional"`     //可选 扩展参数
+}
+
+type Response {
+	Message string `json:"message"`
+}
+
+service austin-api {
+	//单文案发送接口
+	@handler SendHandler
+	post /send (SendRequest)
+	
+}
