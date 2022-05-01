@@ -1,6 +1,9 @@
-package task_util
+package taskUtil
 
 import (
+	"austin-go/app/austin-common/enums/channelType"
+	"austin-go/app/austin-common/enums/messageType"
+	"austin-go/app/austin-common/types"
 	"fmt"
 	"github.com/spf13/cast"
 	"strings"
@@ -26,7 +29,22 @@ func GenerateUrl(url string, templateId int64, templateType int) string {
 // which is replaced by a map in unordered way, case-sensitively.
 func ReplaceByMap(origin string, replaces map[string]string) string {
 	for k, v := range replaces {
-		origin = strings.Replace(origin, "${"+k+"}", v, -1)
+		origin = strings.Replace(origin, "{$"+k+"}", v, -1)
 	}
 	return origin
+}
+
+func GetAllGroupIds() []string {
+	list := make([]string, 0)
+	for _, ct := range channelType.TypeCodeEn {
+		for _, mt := range messageType.TypeCodeEn {
+			list = append(list, ct+"."+mt)
+		}
+	}
+	return list
+}
+func GetGroupIdByTaskInfo(info types.TaskInfo) string {
+	channelCodeEn := channelType.TypeCodeEn[info.SendChannel]
+	msgCodeEn := messageType.TypeCodeEn[info.MsgType]
+	return channelCodeEn + "." + msgCodeEn
 }

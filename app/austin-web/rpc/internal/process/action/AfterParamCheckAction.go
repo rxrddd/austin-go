@@ -1,7 +1,9 @@
 package action
 
 import (
-	"austin-go/app/austin-common/task_util"
+	"austin-go/app/austin-common/enums/channelType"
+	"austin-go/app/austin-common/enums/idType"
+	"austin-go/app/austin-common/taskUtil"
 	"austin-go/app/austin-common/types"
 	"context"
 	"github.com/pkg/errors"
@@ -22,11 +24,11 @@ func (p AfterParamCheckAction) Process(_ context.Context, data interface{}) erro
 	}
 	// 1. 过滤掉不合法的手机号
 
-	if sendTaskModel.TaskInfo[0].IdType == 30 && sendTaskModel.TaskInfo[0].SendChannel == 30 {
+	if sendTaskModel.TaskInfo[0].IdType == idType.Phone && sendTaskModel.TaskInfo[0].SendChannel == channelType.Sms {
 		var newTask []types.TaskInfo
 		for _, item := range sendTaskModel.TaskInfo {
 			for _, tel := range item.Receiver {
-				matched, _ := regexp.Match(task_util.PhoneRegex, []byte(tel))
+				matched, _ := regexp.Match(taskUtil.PhoneRegex, []byte(tel))
 				if matched {
 					newTask = append(newTask, item)
 				}

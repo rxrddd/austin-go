@@ -1,8 +1,8 @@
 package action
 
 import (
-	"austin-go/app/austin-common/content_model"
-	"austin-go/app/austin-common/task_util"
+	"austin-go/app/austin-common/dto/content_model"
+	"austin-go/app/austin-common/taskUtil"
 	"austin-go/app/austin-common/types"
 	"austin-go/common/zutils/transform"
 	"austin-go/repo"
@@ -38,7 +38,7 @@ func (p AssembleAction) Process(ctx context.Context, data interface{}) error {
 
 		curTask := types.TaskInfo{
 			MessageTemplateId: messageTemplate.ID,
-			BusinessId:        task_util.GenerateBusinessId(messageTemplate.ID, messageTemplate.TemplateType),
+			BusinessId:        taskUtil.GenerateBusinessId(messageTemplate.ID, messageTemplate.TemplateType),
 			Receiver:          transform.ArrayStringUniq(strings.Split(param.Receiver, ",")),
 			IdType:            messageTemplate.IDType,
 			SendChannel:       messageTemplate.SendChannel,

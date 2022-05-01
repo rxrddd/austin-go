@@ -130,7 +130,7 @@ func (m *MessagingClient) Publish(body []byte, queueName string) error {
 
 	queue, err := ch.QueueDeclare( // Declare a queue that will be created if not exists with some args
 		queueName, // our queue name
-		false,     // durable
+		true,      // durable
 		false,     // delete when unused
 		false,     // exclusive
 		false,     // no-wait
@@ -187,7 +187,7 @@ func (m *MessagingClient) SubscribeToExchange(exchangeName string, exchangeType 
 	//log.Debugf("declared Exchange, declaring Queue (%s)", "")
 	queue, err := ch.QueueDeclare(
 		"",    // name of the queue
-		false, // durable
+		true,  // durable
 		false, // delete when usused
 		false, // exclusive
 		false, // noWait
@@ -238,7 +238,7 @@ func (m *MessagingClient) Subscribe(queueName string, handlerFunc func(amqp.Deli
 
 	queue, err := ch.QueueDeclare(
 		queueName, // name of the queue
-		false,     // durable
+		true,      // durable
 		false,     // delete when usused
 		false,     // exclusive
 		false,     // noWait

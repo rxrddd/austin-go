@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/rest/httpc"
 
 	"austin-go/app/austin-web/api/internal/config"
 	"austin-go/app/austin-web/api/internal/handler"
@@ -27,6 +28,10 @@ func main() {
 
 	handler.RegisterHandlers(server, ctx)
 	logx.DisableStat()
+	logx.Disable()
+
+	httpc.Do()
+
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
 }

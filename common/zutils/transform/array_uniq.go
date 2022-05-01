@@ -11,3 +11,18 @@ func ArrayStringUniq(arr []string) []string {
 	}
 	return newStr
 }
+
+func GetIntKeysByMap(data map[int]string) []int {
+	var list []int
+	for key := range data {
+		list = append(list, key)
+	}
+	return list
+}
+func GetStringValuesByMap(data map[int]string) []string {
+	var list []string
+	for _, value := range data {
+		list = append(list, value)
+	}
+	return list
+}
