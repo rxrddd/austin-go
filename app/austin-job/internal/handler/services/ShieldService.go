@@ -60,5 +60,6 @@ func (l shieldService) Shield(ctx context.Context, taskInfo *types.TaskInfo) {
 }
 
 func isNight() bool {
-	return time.Now().Hour() < 8
+	return true
+	//return time.Now().Hour() < 8
 }

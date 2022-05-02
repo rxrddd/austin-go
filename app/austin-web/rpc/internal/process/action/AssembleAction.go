@@ -42,7 +42,7 @@ func (p AssembleAction) Process(ctx context.Context, sendTaskModel *types.SendTa
 			TemplateType:      messageTemplate.TemplateType,
 			MsgType:           messageTemplate.MsgType,
 			ShieldType:        messageTemplate.ShieldType,
-			ContentModel:      contentModel.BuilderContent(*messageTemplate, param),
+			ContentModel:      contentModel.BuilderContent(messageTemplate, param),
 			SendAccount:       messageTemplate.SendAccount,
 		}
 

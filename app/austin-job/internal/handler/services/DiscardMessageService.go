@@ -2,21 +2,33 @@ package services
 
 import (
 	"austin-go/app/austin-common/types"
+	"austin-go/app/austin-job/internal/svc"
 	"austin-go/common/zutils/arrayUtils"
+	"austin-go/common/zutils/transform"
+	"context"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type discardMessageService struct {
+	svcCtx *svc.ServiceContext
 }
 
-func NewDiscardMessageService() *discardMessageService {
-	return &discardMessageService{}
+const discardMessageKey = "discard_message"
+
+func NewDiscardMessageService(svcCtx *svc.ServiceContext) *discardMessageService {
+	return &discardMessageService{svcCtx: svcCtx}
 }
 
-func (l discardMessageService) IsDiscard(taskInfo *types.TaskInfo) bool {
-	//根据动态配置的模板id来直接丢弃,使用redis或者配置中心
-	var discardMessageTemplateIds = []int64{0}
-
-	if arrayUtils.ArrayInt64In(discardMessageTemplateIds, taskInfo.MessageTemplateId) {
+//根据redis配置丢弃某个模板的所有消息
+func (l discardMessageService) IsDiscard(ctx context.Context, taskInfo *types.TaskInfo) bool {
+	discardMessageTemplateIds, err := l.svcCtx.RedisClient.SmembersCtx(ctx, discardMessageKey)
+	if err != nil {
+		logx.Errorf("discardMessageService smembers err:%v", err)
+	}
+	if len(discardMessageTemplateIds) == 0 {
+		return false
+	}
+	if arrayUtils.ArrayInt64In(transform.ArrayStringToInt64(discardMessageTemplateIds), taskInfo.MessageTemplateId) {
 		return true
 	}
 	return false

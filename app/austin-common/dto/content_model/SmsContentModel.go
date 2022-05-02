@@ -31,9 +31,3 @@ func (s SmsContentModel) BuilderContent(messageTemplate model.MessageTemplate, m
 	}
 	return content
 }
-func (s SmsContentModel) GetVariables() []string {
-	return []string{
-		"content",
-		"url",
-	}
-}
