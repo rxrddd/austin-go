@@ -3,7 +3,15 @@ Host: 0.0.0.0
 Port: 8888
 Rabbit:
   URL: amqp://admin:admin@127.0.0.1:5672
+Mysql:
+  Dsn: root:123456@tcp(127.0.0.1:3306)/austin?charset=utf8mb4&parseTime=True&loc=Local
+  MaxIdleConns: 100
+  MaxOpenConns: 100
 Redis:
   Host: 127.0.0.1:6379
   Type: node
   Pass: root
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Pass:
+    Type: node

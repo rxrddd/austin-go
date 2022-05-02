@@ -26,5 +26,5 @@ func (c frequencyDeduplicationService) Deduplication(ctx context.Context, taskIn
 }
 
 func (c frequencyDeduplicationService) DeduplicationSingleKey(taskInfo *types.TaskInfo, receiver string) string {
-	return fmt.Sprintf("%s_%s_%d_%s", frequencyDeduplicationServicePrefix, receiver, taskInfo.MessageTemplateId, taskInfo.SendChannel)
+	return fmt.Sprintf("%s_%s_%d_%d", frequencyDeduplicationServicePrefix, receiver, taskInfo.MessageTemplateId, taskInfo.SendChannel)
 }

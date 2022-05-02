@@ -47,10 +47,10 @@ func (l *BatchSendLogic) BatchSend(in *austin.BatchSendRequest) (*austin.SendRes
 	}
 	businessProcess := process.NewBusinessProcess()
 	_ = businessProcess.AddProcess([]interfaces.Process{
-		action.NewPreParamCheckAction(),           //前置参数校验
-		action.NewAssembleAction(),                //拼装参数
-		action.NewAfterParamCheckAction(),         //后置参数检查
-		action.NewSendMqAction(l.svcCtx.MqClient), //发送到mq
+		action.NewPreParamCheckAction(),    //前置参数校验
+		action.NewAssembleAction(l.svcCtx), //拼装参数
+		action.NewAfterParamCheckAction(),  //后置参数检查
+		action.NewSendMqAction(l.svcCtx),   //发送到mq
 	}...)
 
 	err := businessProcess.Process(l.ctx, sendTaskModel)

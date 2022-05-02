@@ -4,6 +4,7 @@ import (
 	"austin-go/app/austin-common/dto/content_model"
 	"austin-go/app/austin-common/taskUtil"
 	"austin-go/app/austin-common/types"
+	"austin-go/app/austin-web/rpc/internal/svc"
 	"austin-go/common/zutils/transform"
 	"austin-go/repo"
 	"context"
@@ -12,16 +13,18 @@ import (
 )
 
 type AssembleAction struct {
+	svcCtx *svc.ServiceContext
 }
 
-func NewAssembleAction() *AssembleAction {
-	return &AssembleAction{}
+func NewAssembleAction(svcCtx *svc.ServiceContext) *AssembleAction {
+	return &AssembleAction{svcCtx: svcCtx}
 }
 
 func (p AssembleAction) Process(ctx context.Context, sendTaskModel *types.SendTaskModel) error {
 	messageParamList := sendTaskModel.MessageParamList
 
-	messageTemplate, err := repo.NewMessageTemplateRepo().One(ctx, sendTaskModel.MessageTemplateId)
+	messageTemplate, err := repo.NewMessageTemplateRepo(p.svcCtx.Config.CacheRedis).
+		One(ctx, sendTaskModel.MessageTemplateId)
 	if err != nil {
 		return errors.Wrapf(sendErr, "查询模板异常 err:%v 模板id:%d", err, sendTaskModel.MessageTemplateId)
 	}

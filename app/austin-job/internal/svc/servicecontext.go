@@ -20,6 +20,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config:      c,
 		MqClient:    client,
-		RedisClient: redis.New(c.Redis.Host),
+		RedisClient: redis.New(c.CacheRedis[0].Host),
 	}
 }

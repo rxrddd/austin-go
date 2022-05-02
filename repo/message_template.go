@@ -4,39 +4,34 @@ import (
 	"austin-go/app/austin-common/model"
 	"austin-go/app/austin-common/model/cls"
 	"austin-go/common/dbx"
+	"austin-go/common/gormc"
 	"austin-go/common/idgen"
 	"context"
+	"fmt"
+	"github.com/zeromicro/go-zero/core/stores/cache"
 	"gorm.io/gorm"
 )
 
 type MessageTemplateRepo struct {
+	cache gormc.CachedConn
 }
 
-func NewMessageTemplateRepo() *MessageTemplateRepo {
-	return &MessageTemplateRepo{}
+func NewMessageTemplateRepo(c cache.CacheConf, opts ...cache.Option) *MessageTemplateRepo {
+	return &MessageTemplateRepo{
+		cache: gormc.NewConn(c, opts...),
+	}
 }
 
 func (a *MessageTemplateRepo) getModel(ctx context.Context) *gorm.DB {
 	return dbx.GetDb(ctx).Model(&model.MessageTemplate{})
 }
 
-//func (a *MessageTemplateRepo) Page(ctx context.Context, req types.MessageTemplateListReq) (items []model.MessageTemplate, total int64, err error) {
-//	builder := zsqlx.NewBuilder()
-//	if len(req.Name) > 0 {
-//		builder.Like(cls.ClsMessageTemplate.Name, req.Name)
-//	}
-//	cond, args := builder.End()
-//	err = paginate.GetPage(&items, &total, paginate.GetPageParams{
-//		Current:  req.Current,
-//		PageSize: req.PageSize,
-//		Query:    a.getModel(ctx).Where(cond, args...),
-//	})
-//	return items, total, err
-//}
-
-func (a *MessageTemplateRepo) One(ctx context.Context, id int64) (item *model.MessageTemplate, err error) {
-	err = a.getModel(ctx).Where(cls.ClsMessageTemplate.ID, id).Limit(1).Find(&item).Error
-	return item, err
+func (a *MessageTemplateRepo) One(ctx context.Context, id int64) (item model.MessageTemplate, err error) {
+	key := fmt.Sprintf("messagetemplate_%d", id)
+	err = a.cache.QueryRowCtx(ctx, &item, key, func(ctx context.Context, v interface{}) error {
+		return a.getModel(ctx).Where(cls.ClsMessageTemplate.ID, id).Limit(1).Find(&item).Error
+	})
+	return
 }
 func (a *MessageTemplateRepo) OneByField(ctx context.Context, field string, value interface{}) (item *model.MessageTemplate, err error) {
 	err = a.getModel(ctx).Where(field, value).Take(&item).Error

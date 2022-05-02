@@ -18,6 +18,6 @@ func NewContentDeduplicationService(svcCtx *svc.ServiceContext) structs.Duplicat
 }
 
 func (c contentDeduplicationService) Deduplication(ctx context.Context, taskInfo *types.TaskInfo, param structs.DeduplicationConfigItem) error {
-	return srv.NewFrequencyDeduplicationService(c.svcCtx, limit.NewSimpleLimitService(c.svcCtx)).
+	return srv.NewContentDeduplicationService(c.svcCtx, limit.NewSimpleLimitService(c.svcCtx)).
 		Deduplication(ctx, taskInfo, param)
 }

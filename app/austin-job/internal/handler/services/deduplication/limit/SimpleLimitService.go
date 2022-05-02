@@ -25,13 +25,11 @@ func (s simpleLimitService) LimitFilter(ctx context.Context, duplication structs
 	filterReceiver = make([]string, 0)
 	readyPutRedisReceiver := make(map[string]string, len(taskInfo.Receiver))
 	keys := each(deduplicationAllKey(duplication, taskInfo), simpleLimitServiceTag)
-
 	inRedisValue, err := redisUtils.MGet(ctx, s.svcCtx.RedisClient, keys)
 	if err != nil {
 		logx.Errorf("simpleLimitService  inRedisValue MGet err:%v", err)
 		return filterReceiver, nil
 	}
-
 	for _, rv := range taskInfo.Receiver {
 		key := simpleLimitServiceTag + deduplicationSingleKey(duplication, taskInfo, rv)
 		if v, ok := inRedisValue[key]; ok {
@@ -47,7 +45,6 @@ func (s simpleLimitService) LimitFilter(ctx context.Context, duplication structs
 		logx.Errorf("simpleLimitService putInRedis err:%v", err)
 		return filterReceiver, nil
 	}
-
 	return filterReceiver, nil
 }
 func each(keys []string, tag string) []string {
@@ -60,11 +57,11 @@ func each(keys []string, tag string) []string {
 
 func (s simpleLimitService) putInRedis(ctx context.Context, readyPutRedisReceiver, inRedisValue map[string]string, deduplicationTime int64) error {
 	keyValues := make(map[string]string, len(readyPutRedisReceiver))
-	for key := range readyPutRedisReceiver {
-		if val, ok := inRedisValue[key]; ok {
-			keyValues[key] = cast.ToString(cast.ToInt(val) + 1)
+	for _, value := range readyPutRedisReceiver {
+		if val, ok := inRedisValue[value]; ok {
+			keyValues[value] = cast.ToString(cast.ToInt(val) + 1)
 		} else {
-			keyValues[key] = "1"
+			keyValues[value] = "1"
 		}
 	}
 

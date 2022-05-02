@@ -5,17 +5,17 @@ import (
 	"austin-go/app/austin-common/enums/messageType"
 	"austin-go/app/austin-common/taskUtil"
 	"austin-go/app/austin-common/types"
-	"austin-go/common/mq"
+	"austin-go/app/austin-web/rpc/internal/svc"
 	"context"
 	"github.com/zeromicro/go-zero/core/jsonx"
 )
 
 type SendMqAction struct {
-	mqClient mq.IMessagingClient
+	svcCtx *svc.ServiceContext
 }
 
-func NewSendMqAction(mqClient mq.IMessagingClient) *SendMqAction {
-	return &SendMqAction{mqClient: mqClient}
+func NewSendMqAction(svcCtx *svc.ServiceContext) *SendMqAction {
+	return &SendMqAction{svcCtx: svcCtx}
 }
 
 func (p SendMqAction) Process(_ context.Context, sendTaskModel *types.SendTaskModel) error {
@@ -25,5 +25,5 @@ func (p SendMqAction) Process(_ context.Context, sendTaskModel *types.SendTaskMo
 	}
 	channel := channelType.TypeCodeEn[sendTaskModel.TaskInfo[0].SendChannel]
 	msgType := messageType.TypeCodeEn[sendTaskModel.TaskInfo[0].MsgType]
-	return p.mqClient.Publish(marshal, taskUtil.GetMqKey(channel, msgType))
+	return p.svcCtx.MqClient.Publish(marshal, taskUtil.GetMqKey(channel, msgType))
 }
