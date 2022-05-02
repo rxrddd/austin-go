@@ -26,3 +26,8 @@ func (s *AustinServer) Send(ctx context.Context, in *austin.SendRequest) (*austi
 	l := logic.NewSendLogic(ctx, s.svcCtx)
 	return l.Send(in)
 }
+
+func (s *AustinServer) BatchSend(ctx context.Context, in *austin.BatchSendRequest) (*austin.SendResponse, error) {
+	l := logic.NewBatchSendLogic(ctx, s.svcCtx)
+	return l.BatchSend(in)
+}

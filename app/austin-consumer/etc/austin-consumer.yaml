@@ -1,4 +1,4 @@
-Name: austin-consumer-api
+Name: austin-consumer
 Host: 0.0.0.0
 Port: 8888
 Rabbit:

@@ -8,6 +8,12 @@ message SendRequest {
   MessageParam MessageParam = 3;
 }
 
+message BatchSendRequest {
+  string Code = 1;
+  int64 MessageTemplateId = 2;
+  repeated MessageParam MessageParam = 3;
+}
+
 message MessageParam {
   string Receiver = 1;
   map<string, string> Variables = 2;
@@ -20,4 +26,5 @@ message SendResponse {
 
 service Austin {
   rpc Send(SendRequest) returns(SendResponse);
+  rpc BatchSend(BatchSendRequest) returns(SendResponse);
 }

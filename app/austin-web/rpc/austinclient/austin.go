@@ -13,12 +13,14 @@ import (
 )
 
 type (
-	MessageParam = austin.MessageParam
-	SendRequest  = austin.SendRequest
-	SendResponse = austin.SendResponse
+	BatchSendRequest = austin.BatchSendRequest
+	MessageParam     = austin.MessageParam
+	SendRequest      = austin.SendRequest
+	SendResponse     = austin.SendResponse
 
 	Austin interface {
 		Send(ctx context.Context, in *SendRequest, opts ...grpc.CallOption) (*SendResponse, error)
+		BatchSend(ctx context.Context, in *BatchSendRequest, opts ...grpc.CallOption) (*SendResponse, error)
 	}
 
 	defaultAustin struct {
@@ -35,4 +37,9 @@ func NewAustin(cli zrpc.Client) Austin {
 func (m *defaultAustin) Send(ctx context.Context, in *SendRequest, opts ...grpc.CallOption) (*SendResponse, error) {
 	client := austin.NewAustinClient(m.cli.Conn())
 	return client.Send(ctx, in, opts...)
+}
+
+func (m *defaultAustin) BatchSend(ctx context.Context, in *BatchSendRequest, opts ...grpc.CallOption) (*SendResponse, error) {
+	client := austin.NewAustinClient(m.cli.Conn())
+	return client.BatchSend(ctx, in, opts...)
 }

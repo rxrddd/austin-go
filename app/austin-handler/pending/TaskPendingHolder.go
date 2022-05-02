@@ -2,6 +2,7 @@ package pending
 
 import (
 	"austin-go/app/austin-common/taskUtil"
+	"context"
 	"github.com/panjf2000/ants/v2"
 )
 
@@ -25,10 +26,12 @@ func NewTaskPendingHolder() *TaskPendingHolder {
 }
 
 //把任务提交到对应的池子内
-func (t TaskPendingHolder) Submit(groupId string, run TaskRun) error {
-	return t.pool[groupId].Submit(run.Run)
+func (t TaskPendingHolder) Submit(ctx context.Context, groupId string, run TaskRun) error {
+	return t.pool[groupId].Submit(func() {
+		run.Run(ctx)
+	})
 }
 
-func Submit(groupId string, run TaskRun) error {
-	return defaultTaskPendingHolder.Submit(groupId, run)
+func Submit(ctx context.Context, groupId string, run TaskRun) error {
+	return defaultTaskPendingHolder.Submit(ctx, groupId, run)
 }

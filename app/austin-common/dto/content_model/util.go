@@ -1,7 +1,7 @@
 package content_model
 
 import (
-	"austin-go/app/austin-common/enums/channel"
+	"austin-go/app/austin-common/enums/channelType"
 	"austin-go/app/austin-common/interfaces"
 )
 
