@@ -2,6 +2,7 @@ package listen
 
 import (
 	"austin-go/app/austin-job/internal/cron"
+	"austin-go/app/austin-job/internal/mqs"
 	"austin-go/app/austin-job/internal/svc"
 	"context"
 	"github.com/zeromicro/go-zero/core/service"
@@ -13,8 +14,8 @@ func Mqs(svcCtx *svc.ServiceContext) []service.Service {
 	ctx := context.Background()
 
 	var services []service.Service
-	services = append(services, RabbitMqs(ctx, svcCtx)...)
 	services = append(services, []service.Service{
+		mqs.NewRabbitTask(ctx, svcCtx),
 		cron.NewCronTask(ctx, svcCtx),
 	}...)
 

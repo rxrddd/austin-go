@@ -43,9 +43,9 @@ func (l *RabbitTask) Stop() {
 
 func (l *RabbitTask) onMassage(delivery amqp.Delivery) {
 	ctx := context.Background()
-	var SendTaskModel types.SendTaskModel
-	_ = jsonx.Unmarshal(delivery.Body, &SendTaskModel)
-	for _, taskInfo := range SendTaskModel.TaskInfo {
+	var taskList []types.TaskInfo
+	_ = jsonx.Unmarshal(delivery.Body, &taskList)
+	for _, taskInfo := range taskList {
 		logx.WithContext(ctx).Infof("消息接收成功,开始消费,内容: %s", string(delivery.Body))
 		channel := channelType.TypeCodeEn[taskInfo.SendChannel]
 		msgType := messageType.TypeCodeEn[taskInfo.MsgType]

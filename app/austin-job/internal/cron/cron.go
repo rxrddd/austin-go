@@ -28,7 +28,6 @@ func NewCronTask(ctx context.Context, svcCtx *svc.ServiceContext) *cronTask {
 func (l *cronTask) Start() {
 	c := cron.New(cron.WithSeconds())
 	c.AddFunc("0 0 8 * * ?", l.nightShieldHandler)
-	//c.AddFunc("*/5 * * * * ?", l.nightShieldHandler)
 	c.Start()
 	defer c.Stop()
 	select {}
@@ -58,10 +57,9 @@ func (l *cronTask) nightShieldHandler() {
 			logx.Errorf("nightShieldHandler jsonx.Unmarshal err : %v", err)
 			continue
 		}
-		//todo:: 有个bug就是消息扔不回去了
 		channel := channelType.TypeCodeEn[taskInfo.SendChannel]
 		msgType := messageType.TypeCodeEn[taskInfo.MsgType]
-		str, _ := jsonx.Marshal(taskInfo)
+		str, _ := jsonx.Marshal([]types.TaskInfo{taskInfo})
 		err = l.svcCtx.MqClient.Publish(str, taskUtil.GetMqKey(channel, msgType))
 		if err != nil {
 			logx.Errorf("nightShieldHandler Publish err:%v,taskInfo:%s", err, taskInfo)

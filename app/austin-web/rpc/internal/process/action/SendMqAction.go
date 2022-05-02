@@ -19,7 +19,7 @@ func NewSendMqAction(svcCtx *svc.ServiceContext) *SendMqAction {
 }
 
 func (p SendMqAction) Process(_ context.Context, sendTaskModel *types.SendTaskModel) error {
-	marshal, err := jsonx.Marshal(sendTaskModel)
+	marshal, err := jsonx.Marshal(sendTaskModel.TaskInfo)
 	if err != nil {
 		return err
 	}
