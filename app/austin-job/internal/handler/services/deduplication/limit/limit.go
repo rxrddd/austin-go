@@ -5,11 +5,13 @@ import (
 	"austin-go/app/austin-job/internal/handler/services/deduplication/structs"
 )
 
-type LimitService interface {
-	LimitFilter(duplication structs.DuplicationService, taskInfo *types.TaskInfo, param structs.DeduplicationConfigItem)
+func deduplicationAllKey(service structs.DeduplicationService, taskInfo *types.TaskInfo) []string {
+	var newRows []string
+	for _, receiver := range taskInfo.Receiver {
+		newRows = append(newRows, deduplicationSingleKey(service, taskInfo, receiver))
+	}
+	return newRows
 }
-type DeduplicationService interface {
-	Deduplication(param structs.DeduplicationConfigItem)
+func deduplicationSingleKey(service structs.DeduplicationService, taskInfo *types.TaskInfo, receiver string) string {
+	return service.DeduplicationSingleKey(taskInfo, receiver)
 }
-
-//模板方法

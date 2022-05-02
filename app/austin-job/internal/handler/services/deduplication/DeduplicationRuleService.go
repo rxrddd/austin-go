@@ -5,6 +5,7 @@ import (
 	"austin-go/app/austin-job/internal/handler/services/deduplication/deduplicationService"
 	"austin-go/app/austin-job/internal/handler/services/deduplication/structs"
 	"austin-go/app/austin-job/internal/svc"
+	"context"
 	"github.com/spf13/cast"
 	"strings"
 )
@@ -23,7 +24,7 @@ func NewDeduplicationRuleService(svcCtx *svc.ServiceContext) *deduplicationRuleS
 	}
 }
 
-func (l deduplicationRuleService) Duplication(taskInfo *types.TaskInfo) {
+func (l deduplicationRuleService) Duplication(ctx context.Context, taskInfo *types.TaskInfo) {
 	// 配置样例：{"deduplication_10":{"num":1,"time":300},"deduplication_20":{"num":5}}
 
 	var deduplicationConfig = map[string]structs.DeduplicationConfigItem{
@@ -42,7 +43,7 @@ func (l deduplicationRuleService) Duplication(taskInfo *types.TaskInfo) {
 			curKey := cast.ToInt(arr[1])
 			exec, flag := getExec(curKey, l.svcCtx)
 			if flag {
-				exec.Deduplication(value, taskInfo)
+				exec.Deduplication(ctx, taskInfo, value)
 			}
 		}
 	}

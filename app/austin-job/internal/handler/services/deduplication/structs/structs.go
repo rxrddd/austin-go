@@ -1,12 +1,15 @@
 package structs
 
-import "austin-go/app/austin-common/types"
+import (
+	"austin-go/app/austin-common/types"
+	"context"
+)
 
 type DeduplicationConfigItem struct {
-	Num  int `json:"num"`
-	Time int `json:"time"`
+	Num  int   `json:"num"`
+	Time int64 `json:"time"`
 }
 
 type DuplicationService interface {
-	Deduplication(param DeduplicationConfigItem, taskInfo *types.TaskInfo)
+	Deduplication(ctx context.Context, taskInfo *types.TaskInfo, param DeduplicationConfigItem) error
 }

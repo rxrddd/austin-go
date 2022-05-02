@@ -31,7 +31,7 @@ func (t Task) Run(ctx context.Context) {
 		services.NewShieldService(t.svcCtx).Shield(ctx, &t.TaskInfo)
 		// 2.平台通用去重 1. N分钟相同内容去重, 2. 一天内N次相同渠道去重
 		if len(t.TaskInfo.Receiver) > 0 {
-			deduplication.NewDeduplicationRuleService(t.svcCtx).Duplication(&t.TaskInfo)
+			deduplication.NewDeduplicationRuleService(t.svcCtx).Duplication(ctx, &t.TaskInfo)
 		}
 		// 3. 真正发送消息
 		if len(t.TaskInfo.Receiver) > 0 {
