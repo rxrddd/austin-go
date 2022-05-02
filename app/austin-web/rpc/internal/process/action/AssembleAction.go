@@ -8,7 +8,6 @@ import (
 	"austin-go/repo"
 	"context"
 	"github.com/pkg/errors"
-	"github.com/zeromicro/go-zero/core/logx"
 	"strings"
 )
 
@@ -19,12 +18,7 @@ func NewAssembleAction() *AssembleAction {
 	return &AssembleAction{}
 }
 
-func (p AssembleAction) Process(ctx context.Context, data interface{}) error {
-	logx.Info(data)
-	sendTaskModel, ok := data.(*types.SendTaskModel)
-	if !ok {
-		return errors.Wrapf(sendErr, "AssembleAction 类型错误 err:%v", data)
-	}
+func (p AssembleAction) Process(ctx context.Context, sendTaskModel *types.SendTaskModel) error {
 	messageParamList := sendTaskModel.MessageParamList
 
 	messageTemplate, err := repo.NewMessageTemplateRepo().One(ctx, sendTaskModel.MessageTemplateId)

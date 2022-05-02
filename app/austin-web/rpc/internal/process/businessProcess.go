@@ -1,7 +1,8 @@
 package process
 
 import (
-	"austin-go/app/austin-web/rpc/internal/process/interfaces"
+	"austin-go/app/austin-common/interfaces"
+	"austin-go/app/austin-common/types"
 	"context"
 )
 
@@ -14,9 +15,9 @@ func NewBusinessProcess() *BusinessProcess {
 		process: make([]interfaces.Process, 0),
 	}
 }
-func (p *BusinessProcess) Process(ctx context.Context, data interface{}) error {
+func (p *BusinessProcess) Process(ctx context.Context, sendTaskModel *types.SendTaskModel) error {
 	for _, pr := range p.process {
-		err := pr.Process(ctx, data)
+		err := pr.Process(ctx, sendTaskModel)
 		if err != nil {
 			return err
 		}

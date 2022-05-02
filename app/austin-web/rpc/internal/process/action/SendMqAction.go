@@ -1,9 +1,12 @@
 package action
 
 import (
+	"austin-go/app/austin-common/enums/channelType"
+	"austin-go/app/austin-common/enums/messageType"
+	"austin-go/app/austin-common/types"
 	"austin-go/common/mq"
-	"austin-go/common/zutils/dd"
 	"context"
+	"fmt"
 	"github.com/zeromicro/go-zero/core/jsonx"
 )
 
@@ -15,15 +18,12 @@ func NewSendMqAction(mqClient mq.IMessagingClient) *SendMqAction {
 	return &SendMqAction{mqClient: mqClient}
 }
 
-func (p SendMqAction) Process(ctx context.Context, data interface{}) error {
-	dd.Print(data)
-	//sendTaskModel, ok := data.(*types.SendTaskModel)
-	//if !ok {
-	//	return errors.Wrapf(sendErr, "AssembleAction 类型错误 err:%v", data)
-	//}
-	marshal, err := jsonx.Marshal(data)
+func (p SendMqAction) Process(_ context.Context, sendTaskModel *types.SendTaskModel) error {
+	marshal, err := jsonx.Marshal(sendTaskModel)
 	if err != nil {
 		return err
 	}
-	return p.mqClient.Publish(marshal, "austin.biz")
+	channel := channelType.TypeCodeEn[sendTaskModel.TaskInfo[0].SendChannel]
+	msgType := messageType.TypeCodeEn[sendTaskModel.TaskInfo[0].MsgType]
+	return p.mqClient.Publish(marshal, fmt.Sprintf("austin.biz.%s.%s", channel, msgType))
 }
