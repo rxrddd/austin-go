@@ -4,6 +4,7 @@ import (
 	"austin-go/app/austin-common/types"
 	"austin-go/app/austin-job/internal/handler/handlers"
 	"austin-go/app/austin-job/internal/handler/services"
+	"austin-go/app/austin-job/internal/handler/services/deduplication"
 	"austin-go/app/austin-job/internal/svc"
 	"context"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -30,7 +31,7 @@ func (t Task) Run(ctx context.Context) {
 		services.NewShieldService(t.svcCtx).Shield(ctx, &t.TaskInfo)
 		// 2.平台通用去重 1. N分钟相同内容去重, 2. 一天内N次相同渠道去重
 		if len(t.TaskInfo.Receiver) > 0 {
-			services.NewDeduplicationRuleService(t.svcCtx).Duplication(&t.TaskInfo)
+			deduplication.NewDeduplicationRuleService(t.svcCtx).Duplication(&t.TaskInfo)
 		}
 		// 3. 真正发送消息
 		if len(t.TaskInfo.Receiver) > 0 {
