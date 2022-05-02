@@ -48,3 +48,7 @@ func GetGroupIdByTaskInfo(info types.TaskInfo) string {
 	msgCodeEn := messageType.TypeCodeEn[info.MsgType]
 	return channelCodeEn + "." + msgCodeEn
 }
+
+func GetMqKey(channel, msgType string) string {
+	return fmt.Sprintf("austin.biz.%s.%s", channel, msgType)
+}

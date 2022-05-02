@@ -1,7 +1,7 @@
 package listen
 
 import (
-	"austin-go/app/austin-consumer/internal/svc"
+	"austin-go/app/austin-job/internal/svc"
 	"context"
 	"github.com/zeromicro/go-zero/core/service"
 )

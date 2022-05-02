@@ -1,5 +1,7 @@
 package types
 
+import "github.com/zeromicro/go-zero/core/jsonx"
+
 type TaskInfo struct {
 	MessageTemplateId int64       `json:"messageTemplateId"`
 	BusinessId        int64       `json:"businessId"`
@@ -12,6 +14,12 @@ type TaskInfo struct {
 	ContentModel      interface{} `json:"contentModel"`
 	SendAccount       int         `json:"sendAccount"`
 }
+
+func (t TaskInfo) String() string {
+	marshal, _ := jsonx.Marshal(t)
+	return string(marshal)
+}
+
 type ContentModel struct {
 }
 
