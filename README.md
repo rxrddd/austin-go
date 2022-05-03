@@ -11,7 +11,7 @@ austin项目的golang版本
   
 2. 你可以学习到:
   
-  - go-zero的api和logic层如何调用
+  - go-zero的api和rpc层如何调用
   - go-zero项目如何使用gorm,以及封装gorm对应的gorm cache
   - go-zero项目中如何使用定时任务/mq消费
 
