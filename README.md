@@ -3,12 +3,9 @@
 #### 介绍
 
 austin项目的golang版本
-### github地址:`https://github.com/rxrddd/austin-go`
-  
-### 原java项目地址:`https://gitee.com/zhongfucheng/austin`
 
 
-
+#### github地址:`https://github.com/rxrddd/austin-go`
 
 #### 项目描述
 
@@ -44,3 +41,13 @@ austin项目的golang版本
 3. 文件导入实时/定时推送
   
 4. 客户端sdk
+
+
+
+#### Thanks
+
+go-zero : https://github.com/zeromicro/go-zero
+
+austin : https://gitee.com/zhongfucheng/austin
+
+gomail : https://gopkg.in/gomail.v2
