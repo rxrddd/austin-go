@@ -25,9 +25,9 @@ austin项目的golang版本
 ```
 ├── app  
 │   ├── austin-admin        消息平台管理端  
-│   ├── austin-common       项目公用的一些数据结构  
+│   ├── austin-common       项目公用的一些结构体,接口定义  
 │   ├── austin-job          项目消费端 mq消费/定时任务  
-│   ├── austin-support      项目独有的一直支持方法  
+│   ├── austin-support      项目独有的一些支持方法  
 │   └── austin-web          项目对外提供的接口  
 ├── common                  项目使用的公共的一些方法  
 ├── gen.md                  生成api/rpc的脚本 参考goctl  
