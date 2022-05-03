@@ -3,6 +3,7 @@ package handlers
 import (
 	"austin-go/app/austin-common/dto/content_model"
 	"austin-go/app/austin-common/types"
+	"context"
 	"fmt"
 )
 
@@ -13,7 +14,7 @@ func NewOfficialAccountHandler() IHandler {
 	return &officialAccountHandler{}
 }
 
-func (h officialAccountHandler) DoHandler(taskInfo types.TaskInfo) (err error) {
+func (h officialAccountHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (err error) {
 	var content content_model.OfficialAccountsContentModel
 	getContentModel(taskInfo.ContentModel, &content)
 	//拼接消息发送

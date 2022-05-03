@@ -4,6 +4,7 @@ import (
 	"austin-go/app/austin-common/dto/content_model"
 	"austin-go/app/austin-common/types"
 	"austin-go/common/zutils/dd"
+	"context"
 	"fmt"
 )
 
@@ -14,7 +15,7 @@ func NewSmsHandler() IHandler {
 	return &smsHandler{}
 }
 
-func (h smsHandler) DoHandler(taskInfo types.TaskInfo) (err error) {
+func (h smsHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (err error) {
 	var content content_model.SmsContentModel
 	getContentModel(taskInfo.ContentModel, &content)
 	dd.Print(content)

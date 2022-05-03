@@ -3,6 +3,7 @@ package handlers
 import (
 	"austin-go/app/austin-common/dto/content_model"
 	"austin-go/app/austin-common/types"
+	"context"
 	"fmt"
 )
 
@@ -13,7 +14,7 @@ func NewEnterpriseWeChatHandler() IHandler {
 	return &enterpriseWeChatHandler{}
 }
 
-func (h enterpriseWeChatHandler) DoHandler(taskInfo types.TaskInfo) (err error) {
+func (h enterpriseWeChatHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (err error) {
 	var content content_model.EnterpriseWeChatContentModel
 	getContentModel(taskInfo.ContentModel, &content)
 	//拼接消息发送

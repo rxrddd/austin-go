@@ -35,7 +35,7 @@ func (t Task) Run(ctx context.Context) {
 		}
 		// 3. 真正发送消息
 		if len(t.TaskInfo.Receiver) > 0 {
-			err := handlers.GetHandler(t.TaskInfo.SendChannel).DoHandler(t.TaskInfo)
+			err := handlers.GetHandler(t.TaskInfo.SendChannel).DoHandler(ctx, t.TaskInfo)
 			if err != nil {
 				logx.Error(err)
 			}

@@ -15,13 +15,12 @@ type emailHandler struct {
 func NewEmailHandler() IHandler {
 	return emailHandler{}
 }
-func (h emailHandler) DoHandler(taskInfo types.TaskInfo) (err error) {
+func (h emailHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (err error) {
 	var content content_model.EmailContentModel
 	getContentModel(taskInfo.ContentModel, &content)
 	m := gomail.NewMessage()
 
 	var acc account.EmailAccount
-	ctx := context.TODO()
 	err = getAccount(ctx, taskInfo.SendAccount, &acc)
 	if err != nil {
 		logx.Errorf(" emailHandler 解析账号错误  获取账号错误:%s err:%v", taskInfo, err)
