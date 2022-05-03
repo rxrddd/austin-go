@@ -60,7 +60,6 @@ curl --location --request POST 'http://localhost:8888/send' \
 │   └── austin-web          项目对外提供的接口  
 ├── common                  项目使用的公共的一些方法  
 ├── gen.md                  生成api/rpc的脚本 参考goctl  
-├── repo                    项目操作数据库逻辑  
 └── sql                     项目sql文件  
 ```
 
