@@ -4,6 +4,7 @@ import (
 	"austin-go/app/austin-common/model"
 	"austin-go/app/austin-common/taskUtil"
 	"austin-go/app/austin-common/types"
+	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/jsonx"
 )
 
@@ -24,8 +25,6 @@ func (d OfficialAccountsContentModel) BuilderContent(messageTemplate model.Messa
 	if v, ok := newVariables["url"]; ok && v != "" {
 		content.Url = taskUtil.GenerateUrl(v, messageTemplate.ID, messageTemplate.TemplateType)
 	}
-	if v, ok := variables["map"].(map[string]string); ok {
-		content.Map = v
-	}
+	content.Map = cast.ToStringMapString(variables["map"])
 	return content
 }

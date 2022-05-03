@@ -70,6 +70,6 @@ func (h officialAccountHandler) DoHandler(ctx context.Context, taskInfo types.Ta
 	return nil
 }
 func (h officialAccountHandler) getRealWxMpTemplateId(messageTemplateId int64) string {
-	//查询数据库得到真实的模板id
+	//return "OiWgIiMYArMRXLX0NVgtinwTTDnq_GV2m0N13asdas"
 	return cast.ToString(messageTemplateId)
 }

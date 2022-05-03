@@ -57,6 +57,7 @@ BEGIN;
 INSERT INTO `message_template` VALUES (1, '买一送十活动', 10, '', 10, NULL, '', '', 30, 30, 20, 20, 30, '{\"content\":\"恭喜你:{$content}\",\"url\":\"\",\"title\":\"\"}', 10, 'Java3y', 'Java3y', '3y', '公众号Java3y', '三歪', 0, 1646274112, 1646275242, '');
 INSERT INTO `message_template` VALUES (2, '校招信息', 10, '', 10, NULL, '', '', 50, 40, 20, 10, 0, '{\"content\":\"你已成功获取到offer 内容:{$content}\",\"url\":\"\",\"title\":\"招聘通知\"}', 1, 'Java3y', 'Java3y', '3y', '公众号Java3y', '鸡蛋', 0, 1646274195, 1646274195, '');
 INSERT INTO `message_template` VALUES (3, '验证码通知', 10, '', 10, NULL, '', '', 30, 30, 20, 30, 0, '{\"content\":\"{$content}\",\"url\":\"\",\"title\":\"\"}', 10, 'Java3y', 'Java3y', '3y', '公众号Java3y', '孙悟空', 0, 1646275213, 1646275213, '');
+INSERT INTO `message_template` VALUES (4, '微信测试通知', 10, ' ', 10, NULL, NULL, NULL, 40, 50, 20, 10, 0, '{\"content\":\"{$content}\",\"url\":\"\",\"title\":\"\"}', 2, '', '', '', '', '', 0, 1646275213, 1646275213, '');
 COMMIT;
 
 -- ----------------------------
@@ -76,6 +77,7 @@ CREATE TABLE `send_account` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `send_account` VALUES (1, '40', '{\"host\":\"smtp.qq.com\",\"port\":25,\"username\":\"test@qq.com\",\"password\":\"tesxxxx\"}', '邮箱账号');
+INSERT INTO `send_account` VALUES (2, '50', '{\"app_id\":\"app_id\",\"app_secret\":\"app_secret\",\"token\":\"weixin\"}', '微信公众号配置');
 COMMIT;
 
 -- ----------------------------
