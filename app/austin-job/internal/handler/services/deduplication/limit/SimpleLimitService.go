@@ -30,13 +30,13 @@ func (s simpleLimitService) LimitFilter(ctx context.Context, duplication structs
 		logx.Errorf("simpleLimitService  inRedisValue MGet err:%v", err)
 		return filterReceiver, nil
 	}
-	for _, rv := range taskInfo.Receiver {
-		key := simpleLimitServiceTag + deduplicationSingleKey(duplication, taskInfo, rv)
+	for _, receiver := range taskInfo.Receiver {
+		key := simpleLimitServiceTag + deduplicationSingleKey(duplication, taskInfo, receiver)
 		if v, ok := inRedisValue[key]; ok {
 			if cast.ToInt(v) > param.Num {
-				filterReceiver = append(filterReceiver, rv)
+				filterReceiver = append(filterReceiver, receiver)
 			} else {
-				readyPutRedisReceiver[rv] = key
+				readyPutRedisReceiver[receiver] = key
 			}
 		}
 	}
