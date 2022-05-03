@@ -27,5 +27,5 @@ func (d OfficialAccountsContentModel) BuilderContent(messageTemplate model.Messa
 	if v, ok := variables["map"].(map[string]string); ok {
 		content.Map = v
 	}
-	return d
+	return content
 }

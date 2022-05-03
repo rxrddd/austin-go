@@ -11,7 +11,7 @@
  Target Server Version : 50737
  File Encoding         : 65001
 
- Date: 03/05/2022 03:42:54
+ Date: 03/05/2022 15:35:25
 */
 
 SET NAMES utf8mb4;
@@ -55,8 +55,27 @@ CREATE TABLE `message_template` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `message_template` VALUES (1, '买一送十活动', 10, '', 10, NULL, '', '', 30, 30, 20, 20, 30, '{\"content\":\"恭喜你:{$content}\",\"url\":\"\",\"title\":\"\"}', 10, 'Java3y', 'Java3y', '3y', '公众号Java3y', '三歪', 0, 1646274112, 1646275242, '');
-INSERT INTO `message_template` VALUES (2, '校招信息', 10, '', 10, NULL, '', '', 50, 40, 20, 10, 0, '{\"content\":\"你已成功获取到offer\",\"url\":\"\",\"title\":\"招聘通知\"}', 10, 'Java3y', 'Java3y', '3y', '公众号Java3y', '鸡蛋', 0, 1646274195, 1646274195, '{\"deduplication_20\":{\"num\":5}}');
-INSERT INTO `message_template` VALUES (3, '验证码通知', 10, '', 10, NULL, '', '', 30, 30, 20, 30, 0, '{\"content\":\"{$content}\",\"url\":\"\",\"title\":\"\"}', 10, 'Java3y', 'Java3y', '3y', '公众号Java3y', '孙悟空', 0, 1646275213, 1646275213, '{\"deduplication_10\":{\"num\":1,\"time\":300},\"deduplication_20\":{\"num\":5}}');
+INSERT INTO `message_template` VALUES (2, '校招信息', 10, '', 10, NULL, '', '', 50, 40, 20, 10, 0, '{\"content\":\"你已成功获取到offer 内容:{$content}\",\"url\":\"\",\"title\":\"招聘通知\"}', 1, 'Java3y', 'Java3y', '3y', '公众号Java3y', '鸡蛋', 0, 1646274195, 1646274195, '');
+INSERT INTO `message_template` VALUES (3, '验证码通知', 10, '', 10, NULL, '', '', 30, 30, 20, 30, 0, '{\"content\":\"{$content}\",\"url\":\"\",\"title\":\"\"}', 10, 'Java3y', 'Java3y', '3y', '公众号Java3y', '孙悟空', 0, 1646275213, 1646275213, '');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for send_account
+-- ----------------------------
+DROP TABLE IF EXISTS `send_account`;
+CREATE TABLE `send_account` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `send_chanel` varchar(255) NOT NULL DEFAULT '' COMMENT '发送渠道',
+  `config` varchar(2000) NOT NULL DEFAULT '' COMMENT '账户配置',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '账号名称',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of send_account
+-- ----------------------------
+BEGIN;
+INSERT INTO `send_account` VALUES (1, '40', '{\"host\":\"smtp.qq.com\",\"port\":25,\"username\":\"test@qq.com\",\"password\":\"tesxxxx\"}', '邮箱账号');
 COMMIT;
 
 -- ----------------------------
@@ -64,7 +83,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sms_record`;
 CREATE TABLE `sms_record` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL,
   `message_template_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '消息模板ID',
   `phone` bigint(20) NOT NULL DEFAULT '0' COMMENT '手机号',
   `supplier_id` tinyint(4) NOT NULL DEFAULT '0' COMMENT '发送短信渠道商的ID',
@@ -85,6 +104,7 @@ CREATE TABLE `sms_record` (
 -- Records of sms_record
 -- ----------------------------
 BEGIN;
+INSERT INTO `sms_record` VALUES (309347020626198528, 2, 0, 0, '', 'test@qq.com', '', 0, '', 0, 1651562077, 1651562077, 1651562077);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -1,11 +1,11 @@
 package deduplication
 
 import (
+	"austin-go/app/austin-common/repo"
 	"austin-go/app/austin-common/types"
 	"austin-go/app/austin-job/internal/handler/services/deduplication/deduplicationService"
 	"austin-go/app/austin-job/internal/handler/services/deduplication/structs"
 	"austin-go/app/austin-job/internal/svc"
-	"austin-go/repo"
 	"context"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/jsonx"
@@ -36,7 +36,10 @@ func (l deduplicationRuleService) Duplication(ctx context.Context, taskInfo *typ
 		logx.Errorf("deduplicationRuleService 查询模板错误 err:%v", err)
 		return
 	}
-
+	if one.DeduplicationConfig == "" {
+		//没有配置去重策略直接不管
+		return
+	}
 	var deduplicationConfig = make(map[string]structs.DeduplicationConfigItem)
 	err = jsonx.Unmarshal([]byte(one.DeduplicationConfig), &deduplicationConfig)
 	if err != nil {

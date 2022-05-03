@@ -23,5 +23,5 @@ func (d EmailContentModel) BuilderContent(messageTemplate model.MessageTemplate,
 	newVariables := getStringVariables(variables)
 	content.Content = taskUtil.ReplaceByMap(content.Content, newVariables)
 	content.Title = newVariables["title"]
-	return d
+	return content
 }

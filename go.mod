@@ -14,6 +14,8 @@ require (
 	github.com/zeromicro/go-zero v1.3.3
 	google.golang.org/grpc v1.46.0
 	google.golang.org/protobuf v1.28.0 // indirect
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
+	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df // indirect
 	gorm.io/driver/mysql v1.3.3
 	gorm.io/gorm v1.23.5
 )
