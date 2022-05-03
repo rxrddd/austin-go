@@ -31,7 +31,10 @@ austin项目的golang版本
  - 启动job服务:`austin-go/app/austin-job/rpc/austin-job.go`
 > docker一键启动
 - 执行 deployment-shell.sh
-4. 测试(目前只有邮箱服务)
+4. 如需要测试去重服务则修改`message_template`表中的`deduplication_config`字段
+
+5. 使用示例
+> 邮件消息
 ```
 curl --location --request POST 'http://localhost:8888/send' \
 --header 'Content-Type: application/json' \
@@ -47,7 +50,27 @@ curl --location --request POST 'http://localhost:8888/send' \
     "messageTemplateId": 2
 }'
 ```
-5. 如需要测试去重服务则修改`message_template`表中的`deduplication_config`字段
+
+> 微信公众号消息
+```
+curl --location --request POST 'http://localhost:8888/send' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "code": "send",
+    "messageParam": {
+        "receiver": "openId",
+        "variables": {
+            "map": {
+                "name":"张三12333"
+            },
+            "url": "https://www.baidu.com/"
+        }
+    },
+    "messageTemplateId": 4
+}'
+```
+
+
 ```
 {"deduplication_10":{"num":1,"time":300},"deduplication_20":{"num":5}}
 ```
@@ -86,3 +109,5 @@ go-zero : https://github.com/zeromicro/go-zero
 austin : https://gitee.com/zhongfucheng/austin
 
 gomail : https://gopkg.in/gomail.v2
+
+ants : https://github.com/panjf2000/ants
