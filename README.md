@@ -1,39 +1,41 @@
 # austin-go
 
 #### 介绍
-austin项目的golang版本
+
+austin项目的golang版本  
 源项目地址:`https://gitee.com/zhongfucheng/austin`
 
+#### 项目描述
 
-#### 软件架构
-软件架构说明
+1. 基于go-zero/grpc/ants/rabbitmq/mysql/redis 写的一个消息推送平台
+  
+2. 你可以学习到:
+  
+  - go-zero的api和logic层如何调用
+  - go-zero项目如何使用gorm,以及封装gorm对应的gorm cache
+  - go-zero项目中如何使用定时任务/mq消费
 
+#### 目录说明
 
-#### 安装教程
+```
+├── app  
+│   ├── austin-admin        消息平台管理端  
+│   ├── austin-common       项目公用的一些数据结构  
+│   ├── austin-job          项目消费端 mq消费/定时任务  
+│   ├── austin-support      项目独有的一直支持方法  
+│   └── austin-web          项目对外提供的接口  
+├── common                  项目使用的公共的一些方法  
+├── gen.md                  生成api/rpc的脚本 参考goctl  
+├── repo                    项目操作数据库逻辑  
+└── sql                     项目sql文件  
+```
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### 项目未完成功能
 
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+1. 对接管理平台
+  
+2. 实现对应的推送信息handler
+  
+3. 文件导入实时/定时推送
+  
+4. 客户端sdk
