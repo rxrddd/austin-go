@@ -7,7 +7,7 @@ austin项目的golang版本
 
 #### 项目描述
 
-1. 基于go-zero/grpc/ants/rabbitmq/mysql/redis 写的一个消息推送平台
+1. 基于go-zero/grpc/ants/rabbitmq/mysql/redis 写的一个聚合消息推送平台
   
 2. 你可以学习到:
   
