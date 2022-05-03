@@ -10,7 +10,7 @@ WORKDIR /build/zero
 COPY . .
 RUN sh -c "[ -f go.mod ]" || exit
 COPY app/austin-job/etc /app/etc
-RUN go build -ldflags="-s -w" -o /app/austin-job app/austin-job/austin-job.go
+RUN go build -ldflags="-s -w" -o /austin-job app/austin-job/austin-job.go
 
 
 FROM alpine
@@ -23,7 +23,7 @@ RUN apk add --no-cache tzdata
 ENV TZ Asia/Shanghai
 
 WORKDIR /app
-COPY --from=builder /app/austin-job /app/austin-job
+COPY --from=builder /austin-job /app/austin-job
 COPY --from=builder /app/etc /app/etc
 
 CMD ["./austin-job", "-f", "etc/austin-job.yaml"]

@@ -10,7 +10,7 @@ WORKDIR /build/zero
 COPY . .
 RUN sh -c "[ -f go.mod ]" || exit
 COPY app/austin-web/rpc/etc /app/etc
-RUN go build -ldflags="-s -w" -o /app/austin-job app/austin-web/rpc/austin.go
+RUN go build -ldflags="-s -w" -o /austin-web-rpc app/austin-web/rpc/austin.go
 
 
 FROM alpine
@@ -23,7 +23,7 @@ RUN apk add --no-cache tzdata
 ENV TZ Asia/Shanghai
 
 WORKDIR /app
-COPY --from=builder /app/austin-web/rpc /app/austin-web/rpc
+COPY --from=builder /austin-web-rpc /app/austin-web-rpc
 COPY --from=builder /app/etc /app/etc
 
-CMD ["./austin", "-f", "etc/austin.yaml"]
+CMD ["./austin-web-rpc", "-f", "etc/austin.yaml"]
