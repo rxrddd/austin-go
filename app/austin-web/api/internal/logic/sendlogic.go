@@ -7,7 +7,7 @@ import (
 	"austin-go/common/xerr"
 	"context"
 	"github.com/pkg/errors"
-
+	"github.com/zeromicro/go-zero/core/jsonx"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -26,13 +26,23 @@ func NewSendLogic(ctx context.Context, svcCtx *svc.ServiceContext) SendLogic {
 }
 
 func (l *SendLogic) Send(req types.SendRequest) (resp *types.Response, err error) {
+	variables, err := jsonx.Marshal(req.MessageParam.Variables)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrMsg("客户端参数错误"), "send err:%v", err)
+	}
+
+	extra, err := jsonx.Marshal(req.MessageParam.Extra)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrMsg("客户端参数错误"), "send err:%v", err)
+	}
+
 	send, err := l.svcCtx.SendRpc.Send(l.ctx, &austin.SendRequest{
 		Code:              req.Code,
 		MessageTemplateId: req.MessageTemplateId,
 		MessageParam: &austin.MessageParam{
 			Receiver:  req.MessageParam.Receiver,
-			Variables: req.MessageParam.Variables,
-			Extra:     req.MessageParam.Extra,
+			Variables: string(variables),
+			Extra:     string(extra),
 		},
 	})
 	if err != nil {
