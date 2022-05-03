@@ -12,7 +12,7 @@ import (
 	"github.com/zeromicro/go-zero/core/conf"
 )
 
-var configFile = flag.String("f", "etc/austin-consumer.yaml", "the config file")
+var configFile = flag.String("f", "etc/austin-job.yaml", "the config file")
 
 func main() {
 	flag.Parse()

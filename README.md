@@ -6,6 +6,7 @@ austin项目的golang版本
 
 
 #### github地址:`https://github.com/rxrddd/austin-go`
+#### gitee地址:`https://gitee.com/AbelZou/austin-go`
 
 #### 项目描述
 
@@ -22,11 +23,14 @@ austin项目的golang版本
 1. 导入数据库文件:`austin-go/sql/austin.sql`并修改`send_account`表中的`config`配置
 2. 修改对应的mysql/rabbitmq/redis配置
  - rpc服务配置:`austin-go/app/austin-web/rpc/etc/austin.yaml`
- - consumer服务配置:`austin-go/app/austin-job/etc/austin-consumer.yaml`
+ - job服务配置:`austin-go/app/austin-job/etc/austin-job.yaml`
 3. 
+> 手动启动
  - 启动api服务:`austin-go/app/austin-web/api/austin.go`
  - 启动rpc服务:`austin-go/app/austin-web/rpc/austin.go`
- - 启动consumer服务:`austin-go/app/austin-job/rpc/austin-consumer.go`
+ - 启动job服务:`austin-go/app/austin-job/rpc/austin-job.go`
+> docker一键启动
+- 执行 deployment-shell.sh
 4. 测试(目前只有邮箱服务)
 ```
 curl --location --request POST 'http://localhost:8888/send' \
