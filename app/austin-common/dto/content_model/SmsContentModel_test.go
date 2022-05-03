@@ -4,6 +4,7 @@ import (
 	"austin-go/app/austin-common/model"
 	"austin-go/app/austin-common/types"
 	"austin-go/common/zutils/dd"
+	"fmt"
 	"testing"
 )
 
@@ -14,13 +15,25 @@ func TestNewSmsContentModel(t *testing.T) {
 	}
 	var messageParam = types.MessageParam{
 		Receiver: "13788888888",
-		Variables: map[string]string{
+		Variables: map[string]interface{}{
 			"url":     "cnblogs.com/rainbow-tan/p/15628059.html",
 			"content": "6666164180",
+			"map": map[string]string{
+				"appid": "xxx",
+			},
 		},
-		Extra: nil,
 	}
 
 	content := NewSmsContentModel().BuilderContent(messageTemplate, messageParam)
 	dd.Print(content)
+}
+
+func TestXX(t *testing.T) {
+	var a = make(map[string]string)
+	a["name"] = "张三"
+	var b string
+	fmt.Println(a["name"])
+	fmt.Println(a["李四"])
+	b = a["李四"]
+	fmt.Println(b)
 }

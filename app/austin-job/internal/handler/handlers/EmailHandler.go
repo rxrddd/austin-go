@@ -15,7 +15,6 @@ func NewEmailHandler() IHandler {
 func (h emailHandler) DoHandler(taskInfo types.TaskInfo) (err error) {
 	fmt.Println(taskInfo)
 	var content content_model.EmailContentModel
-
 	getContentModel(taskInfo.ContentModel, &content)
 
 	return nil
