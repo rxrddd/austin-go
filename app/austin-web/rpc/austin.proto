@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+
 package austin;
 
 message SendRequest {
@@ -16,8 +17,8 @@ message BatchSendRequest {
 
 message MessageParam {
   string Receiver = 1;
-  map<string, string> Variables = 2;
-  map<string, string> Extra = 3;
+  string Variables = 2;
+  string Extra = 3;
 }
 
 message SendResponse {
