@@ -75,28 +75,32 @@ curl --location --request POST 'http://localhost:8888/send' \
 > 钉钉自定义机器人
 ```
 //艾特某些手机号
-{
+curl --location --request POST 'http://localhost:8888/send' \
+--header 'Content-Type: application/json' \
+--data-raw '{
     "code": "send",
     "messageParam": {
-        "receiver": "13588888888,13588888887", 
+        "receiver": "13588888888,13588888887",
         "variables": {
             "content": "测试\n换行"
         }
     },
     "messageTemplateId": 5
-}
+}'
 
 //艾特全部人
-{
+curl --location --request POST 'http://localhost:8888/send' \
+--header 'Content-Type: application/json' \
+--data-raw '{
     "code": "send",
     "messageParam": {
-        "receiver": "@all", 
+        "receiver": "@all",
         "variables": {
             "content": "测试\n换行"
         }
     },
     "messageTemplateId": 5
-}
+}'
 ```
 
 
