@@ -26,6 +26,7 @@ func (h dingDingRobotHandler) DoHandler(ctx context.Context, taskInfo types.Task
 	err = getAccount(ctx, taskInfo.SendAccount, &acc)
 	if err != nil {
 		logx.Errorf(" dingDingRobotHandler 解析账号错误  获取账号错误:%s err:%v", taskInfo, err)
+		return
 	}
 	var at []string
 	d := ding.Webhook{
@@ -43,6 +44,7 @@ func (h dingDingRobotHandler) DoHandler(ctx context.Context, taskInfo types.Task
 	err = d.SendMessage(content.Content, at...)
 	if err != nil {
 		logx.Errorf("dingDingRobotHandler SendMessage err:%v", err)
+		return
 	}
 	return nil
 }

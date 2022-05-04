@@ -30,6 +30,7 @@ func (h officialAccountHandler) DoHandler(ctx context.Context, taskInfo types.Ta
 	err = getAccount(ctx, taskInfo.SendAccount, &acc)
 	if err != nil {
 		logx.Errorf(" officialAccountHandler 解析账号错误  获取账号错误:%s err:%v", taskInfo, err)
+		return
 	}
 	wc := wechat.NewWechat()
 	cacheImpl := cache.NewMemory()

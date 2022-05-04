@@ -24,6 +24,7 @@ func (l discardMessageService) IsDiscard(ctx context.Context, taskInfo *types.Ta
 	discardMessageTemplateIds, err := l.svcCtx.RedisClient.SmembersCtx(ctx, discardMessageKey)
 	if err != nil {
 		logx.Errorf("discardMessageService smembers err:%v", err)
+		return false
 	}
 	if len(discardMessageTemplateIds) == 0 {
 		return false

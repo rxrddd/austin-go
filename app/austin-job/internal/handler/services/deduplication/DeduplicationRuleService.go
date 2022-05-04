@@ -7,18 +7,16 @@ import (
 	"austin-go/app/austin-job/internal/handler/services/deduplication/structs"
 	"austin-go/app/austin-job/internal/svc"
 	"context"
-	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/jsonx"
 	"github.com/zeromicro/go-zero/core/logx"
-	"strings"
 )
 
 type deduplicationRuleService struct {
 	svcCtx *svc.ServiceContext
 }
 
-const Content = 10   //N分钟相同内容去重
-const Frequency = 20 //一天内N次相同渠道去重
+const Content = "10"   //N分钟相同内容去重
+const Frequency = "20" //一天内N次相同渠道去重
 const deduplicationPrefix = "deduplication_"
 
 func NewDeduplicationRuleService(svcCtx *svc.ServiceContext) *deduplicationRuleService {
@@ -52,12 +50,7 @@ func (l deduplicationRuleService) Duplication(ctx context.Context, taskInfo *typ
 	}
 
 	for key, value := range deduplicationConfig {
-		arr := strings.Split(key, "_")
-		if len(arr) < 1 {
-			continue
-		}
-		curKey := cast.ToInt(arr[1])
-		exec, flag := getExec(curKey, l.svcCtx)
+		exec, flag := getExec(key, l.svcCtx)
 		//表示没匹配到对于的执行器
 		if !flag {
 			continue
@@ -70,10 +63,10 @@ func (l deduplicationRuleService) Duplication(ctx context.Context, taskInfo *typ
 
 }
 
-func getExec(exec int, svcCtx *svc.ServiceContext) (structs.DuplicationService, bool) {
-	var duplicationExec = map[int]structs.DuplicationService{
-		Content:   deduplicationService.NewContentDeduplicationService(svcCtx),
-		Frequency: deduplicationService.NewFrequencyDeduplicationService(svcCtx),
+func getExec(exec string, svcCtx *svc.ServiceContext) (structs.DuplicationService, bool) {
+	var duplicationExec = map[string]structs.DuplicationService{
+		deduplicationPrefix + Content:   deduplicationService.NewContentDeduplicationService(svcCtx),
+		deduplicationPrefix + Frequency: deduplicationService.NewFrequencyDeduplicationService(svcCtx),
 	}
 	v, ok := duplicationExec[exec]
 	return v, ok
