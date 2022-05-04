@@ -12,7 +12,8 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cast v1.4.1
 	github.com/streadway/amqp v1.0.0
-	github.com/tencentcloud/tencentcloud-sdk-go v1.0.392 // indirect
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.392
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms v1.0.392
 	github.com/wanghuiyt/ding v0.0.1
 	github.com/zeromicro/go-zero v1.3.3
 	google.golang.org/grpc v1.46.0
