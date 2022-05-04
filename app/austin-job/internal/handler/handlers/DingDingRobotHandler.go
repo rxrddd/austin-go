@@ -4,6 +4,7 @@ import (
 	"austin-go/app/austin-common/dto/account"
 	"austin-go/app/austin-common/dto/content_model"
 	"austin-go/app/austin-common/types"
+	"austin-go/app/austin-support/utils/accountUtils"
 	"austin-go/common/zutils/arrayUtils"
 	"context"
 	"github.com/wanghuiyt/ding"
@@ -23,7 +24,7 @@ func (h dingDingRobotHandler) DoHandler(ctx context.Context, taskInfo types.Task
 	getContentModel(taskInfo.ContentModel, &content)
 
 	var acc account.DingDingRobotAccount
-	err = getAccount(ctx, taskInfo.SendAccount, &acc)
+	err = accountUtils.GetAccount(ctx, taskInfo.SendAccount, &acc)
 	if err != nil {
 		logx.Errorf(" dingDingRobotHandler 解析账号错误  获取账号错误:%s err:%v", taskInfo, err)
 		return

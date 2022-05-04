@@ -4,6 +4,7 @@ import (
 	"austin-go/app/austin-common/dto/account"
 	"austin-go/app/austin-common/dto/content_model"
 	"austin-go/app/austin-common/types"
+	"austin-go/app/austin-support/utils/accountUtils"
 	"context"
 	"github.com/silenceper/wechat/v2"
 	"github.com/silenceper/wechat/v2/cache"
@@ -27,7 +28,7 @@ func (h officialAccountHandler) DoHandler(ctx context.Context, taskInfo types.Ta
 	//拼接消息发送
 	var acc account.OfficialAccount
 
-	err = getAccount(ctx, taskInfo.SendAccount, &acc)
+	err = accountUtils.GetAccount(ctx, taskInfo.SendAccount, &acc)
 	if err != nil {
 		logx.Errorf(" officialAccountHandler 解析账号错误  获取账号错误:%s err:%v", taskInfo, err)
 		return
