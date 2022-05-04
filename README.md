@@ -32,7 +32,9 @@ austin项目的golang版本
 > docker一键启动
 - 执行 deployment-shell.sh
 4. 如需要测试去重服务则修改`message_template`表中的`deduplication_config`字段
-
+```
+{"deduplication_10":{"num":1,"time":300},"deduplication_20":{"num":5}}
+```
 5. 使用示例
 > 邮件消息
 ```
@@ -70,10 +72,34 @@ curl --location --request POST 'http://localhost:8888/send' \
 }'
 ```
 
+> 钉钉自定义机器人
+```
+//艾特某些手机号
+{
+    "code": "send",
+    "messageParam": {
+        "receiver": "13588888888,13588888887", 
+        "variables": {
+            "content": "测试\n换行"
+        }
+    },
+    "messageTemplateId": 5
+}
 
+//艾特全部人
+{
+    "code": "send",
+    "messageParam": {
+        "receiver": "@all", 
+        "variables": {
+            "content": "测试\n换行"
+        }
+    },
+    "messageTemplateId": 5
+}
 ```
-{"deduplication_10":{"num":1,"time":300},"deduplication_20":{"num":5}}
-```
+
+
 
 
 #### 目录说明

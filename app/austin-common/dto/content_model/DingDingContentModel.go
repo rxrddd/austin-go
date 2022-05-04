@@ -8,9 +8,9 @@ import (
 )
 
 type DingDingContentModel struct {
-	SendType string `json:"sendType"`
-	Content  string `json:"content"`
-	MediaId  string `json:"mediaId"`
+	//SendType string `json:"sendType"`
+	Content string `json:"content"`
+	//MediaId  string `json:"mediaId"`
 }
 
 func NewDingDingContentModel() *DingDingContentModel {
@@ -23,7 +23,7 @@ func (d DingDingContentModel) BuilderContent(messageTemplate model.MessageTempla
 	_ = jsonx.Unmarshal([]byte(messageTemplate.MsgContent), &content)
 	newVariables := getStringVariables(variables)
 	content.Content = taskUtil.ReplaceByMap(content.Content, newVariables)
-	content.SendType = newVariables["sendType"]
-	content.MediaId = newVariables["mediaId"]
+	//content.SendType = newVariables["sendType"]
+	//content.MediaId = newVariables["mediaId"]
 	return content
 }
