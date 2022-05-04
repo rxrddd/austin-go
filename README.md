@@ -134,6 +134,10 @@ go-zero : https://github.com/zeromicro/go-zero
 
 austin : https://gitee.com/zhongfucheng/austin
 
+ants : https://github.com/panjf2000/ants
+
 gomail : https://gopkg.in/gomail.v2
 
-ants : https://github.com/panjf2000/ants
+wechat : https://github.com/silenceper/wechat
+
+ding : https://github.com/wanghuiyt/ding
