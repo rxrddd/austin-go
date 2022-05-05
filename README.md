@@ -70,6 +70,23 @@ curl --location --request POST 'http://localhost:8888/send' \
     },
     "messageTemplateId": 4
 }'
+
+//参数带颜色的
+curl --location --request POST 'http://localhost:8888/send' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "code": "send",
+    "messageParam": {
+        "receiver": "openId",
+        "variables": {
+            "map": {
+                "name":"张三12333|#0000FF"
+            },
+            "url": "https://www.baidu.com/"
+        }
+    },
+    "messageTemplateId": 4
+}'
 ```
 
 > 钉钉自定义机器人

@@ -13,7 +13,10 @@ import (
 	"github.com/silenceper/wechat/v2/officialaccount/message"
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
+	"strings"
 )
+
+const colorSep = "|" //以|分割颜色
 
 //公众号订阅消息
 type officialAccountHandler struct {
@@ -51,7 +54,17 @@ func (h officialAccountHandler) DoHandler(ctx context.Context, taskInfo types.Ta
 	params := make(map[string]*message.TemplateDataItem, len(content.Map))
 
 	for key, val := range content.Map {
-		params[key] = &message.TemplateDataItem{Value: val}
+		color := ""
+		value := ""
+		arr := strings.Split(val, colorSep)
+		if len(arr) == 1 {
+			value = arr[0]
+		}
+		if len(arr) == 2 {
+			value = arr[0]
+			color = arr[1]
+		}
+		params[key] = &message.TemplateDataItem{Value: value, Color: color}
 	}
 	var msgIds []int64
 	//如果需要实现跳转小程序 需要在getRealWxMpTemplateId里面返回对应的数据进行操作
@@ -72,6 +85,5 @@ func (h officialAccountHandler) DoHandler(ctx context.Context, taskInfo types.Ta
 	return nil
 }
 func (h officialAccountHandler) getRealWxMpTemplateId(messageTemplateId int64) string {
-	//return "OiWgIiMYArMRXLX0NVgtinwTTDnq_GV2m0N13asdas"
 	return cast.ToString(messageTemplateId)
 }
