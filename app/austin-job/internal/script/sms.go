@@ -5,6 +5,7 @@ import (
 	"austin-go/app/austin-support/utils/accountUtils"
 	"context"
 	"fmt"
+	errors2 "github.com/pkg/errors"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
@@ -47,7 +48,7 @@ func (t TencentSms) Send(ctx context.Context, smsParams SmsParams) (err error) {
 	response, err := client.SendSms(request)
 	if _, ok := err.(*errors.TencentCloudSDKError); ok {
 		fmt.Printf("An API error has returned: %s", err)
-		return err
+		return errors2.Wrap(err, "An API error has returned")
 	}
 	if err != nil {
 		return err

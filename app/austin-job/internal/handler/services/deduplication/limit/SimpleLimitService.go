@@ -27,7 +27,7 @@ func (s simpleLimitService) LimitFilter(ctx context.Context, duplication structs
 	keys := each(deduplicationAllKey(duplication, taskInfo), simpleLimitServiceTag)
 	inRedisValue, err := redisUtils.MGet(ctx, s.svcCtx.RedisClient, keys)
 	if err != nil {
-		logx.Errorf("simpleLimitService  inRedisValue MGet err:%v", err)
+		logx.Errorw("simpleLimitService  inRedisValue MGet err", logx.Field("err", err.Error()))
 		return filterReceiver, nil
 	}
 	for _, receiver := range taskInfo.Receiver {
@@ -42,7 +42,7 @@ func (s simpleLimitService) LimitFilter(ctx context.Context, duplication structs
 	}
 	err = s.putInRedis(ctx, readyPutRedisReceiver, inRedisValue, param.Time)
 	if err != nil {
-		logx.Errorf("simpleLimitService putInRedis err:%v", err)
+		logx.Errorw("simpleLimitService putInRedis err", logx.Field("err", err.Error()))
 		return filterReceiver, nil
 	}
 	return filterReceiver, nil

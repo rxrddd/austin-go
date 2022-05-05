@@ -46,12 +46,14 @@ func (l *RabbitTask) onMassage(delivery amqp.Delivery) {
 	var taskList []types.TaskInfo
 	_ = jsonx.Unmarshal(delivery.Body, &taskList)
 	for _, taskInfo := range taskList {
-		logx.WithContext(ctx).Infof("消息接收成功,开始消费,内容: %s", string(delivery.Body))
+		logx.WithContext(ctx).Infow("消息接收成功,开始消费", logx.Field("task_info", taskInfo))
 		channel := channelType.TypeCodeEn[taskInfo.SendChannel]
 		msgType := messageType.TypeCodeEn[taskInfo.MsgType]
 		err := pending.Submit(ctx, fmt.Sprintf("%s.%s", channel, msgType), pending.NewTask(taskInfo, l.svcCtx))
 		if err != nil {
-			logx.WithContext(ctx).Errorf("submit task err:%v ,内容: %s", err, string(delivery.Body))
+			logx.WithContext(ctx).Errorw("submit task err",
+				logx.Field("内容", string(delivery.Body)),
+				logx.Field("err", err.Error()))
 		}
 	}
 }

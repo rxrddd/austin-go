@@ -5,7 +5,7 @@ import (
 	"austin-go/app/austin-common/types"
 	"austin-go/app/austin-job/internal/script"
 	"context"
-	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/pkg/errors"
 )
 
 type smsHandler struct {
@@ -23,8 +23,7 @@ func (h smsHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (err
 		SendAccount:       taskInfo.SendAccount,
 	})
 	if err != nil {
-		logx.Errorf("smsHandler 发送消息错误:%s err:%v", taskInfo, err)
-		return err
+		return errors.Wrap(err, "smsHandler send err")
 	}
 	return nil
 }

@@ -6,7 +6,7 @@ import (
 	"austin-go/app/austin-common/types"
 	"austin-go/app/austin-support/utils/accountUtils"
 	"context"
-	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/pkg/errors"
 	"gopkg.in/gomail.v2"
 )
 
@@ -24,7 +24,7 @@ func (h emailHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (e
 	var acc account.EmailAccount
 	err = accountUtils.GetAccount(ctx, taskInfo.SendAccount, &acc)
 	if err != nil {
-		logx.Errorf(" emailHandler 解析账号错误  获取账号错误:%s err:%v", taskInfo, err)
+		return errors.Wrap(err, "emailHandler get account err")
 		return
 	}
 
@@ -38,7 +38,7 @@ func (h emailHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (e
 
 	d := gomail.NewDialer(acc.Host, acc.Port, acc.Username, acc.Password)
 	if err := d.DialAndSend(m); err != nil {
-		logx.Errorf(" emailHandler DialAndSend  taskInfo:%s err:%v", taskInfo, err)
+		return errors.Wrap(err, "emailHandler DialAndSend err")
 	}
 	return nil
 }

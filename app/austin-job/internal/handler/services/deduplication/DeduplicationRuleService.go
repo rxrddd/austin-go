@@ -27,11 +27,10 @@ func NewDeduplicationRuleService(svcCtx *svc.ServiceContext) *deduplicationRuleS
 
 func (l deduplicationRuleService) Duplication(ctx context.Context, taskInfo *types.TaskInfo) {
 	// 配置样例：{"deduplication_10":{"num":1,"time":300},"deduplication_20":{"num":5}}
-	//应该查询数据库的配置进行限流操作
 	one, err := repo.NewMessageTemplateRepo(l.svcCtx.Config.CacheRedis).
 		One(ctx, taskInfo.MessageTemplateId)
 	if err != nil {
-		logx.Errorf("deduplicationRuleService 查询模板错误 err:%v", err)
+		logx.Errorw("deduplicationRuleService 查询模板错误 err", logx.Field("err", err.Error()))
 		return
 	}
 	if one.DeduplicationConfig == "" {
@@ -41,7 +40,7 @@ func (l deduplicationRuleService) Duplication(ctx context.Context, taskInfo *typ
 	var deduplicationConfig = make(map[string]structs.DeduplicationConfigItem)
 	err = jsonx.Unmarshal([]byte(one.DeduplicationConfig), &deduplicationConfig)
 	if err != nil {
-		logx.Errorf("deduplicationRuleService jsonx.Unmarshal err:%v", err)
+		logx.Errorw("deduplicationRuleService jsonx.Unmarshal err", logx.Field("err", err.Error()))
 		return
 	}
 	if len(deduplicationConfig) <= 0 {
@@ -57,7 +56,7 @@ func (l deduplicationRuleService) Duplication(ctx context.Context, taskInfo *typ
 		}
 		err := exec.Deduplication(ctx, taskInfo, value)
 		if err != nil {
-			logx.Error("exec.Deduplication err:%v", err)
+			logx.Errorw("exec.Deduplication err", logx.Field("err", err.Error()))
 		}
 	}
 

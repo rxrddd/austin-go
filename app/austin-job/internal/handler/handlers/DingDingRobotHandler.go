@@ -7,8 +7,8 @@ import (
 	"austin-go/app/austin-support/utils/accountUtils"
 	"austin-go/common/zutils/arrayUtils"
 	"context"
+	"github.com/pkg/errors"
 	"github.com/wanghuiyt/ding"
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type dingDingRobotHandler struct {
@@ -26,8 +26,7 @@ func (h dingDingRobotHandler) DoHandler(ctx context.Context, taskInfo types.Task
 	var acc account.DingDingRobotAccount
 	err = accountUtils.GetAccount(ctx, taskInfo.SendAccount, &acc)
 	if err != nil {
-		logx.Errorf(" dingDingRobotHandler 解析账号错误  获取账号错误:%s err:%v", taskInfo, err)
-		return
+		return errors.Wrap(err, "dingDingRobotHandler get account err")
 	}
 	var at []string
 	d := ding.Webhook{
@@ -44,8 +43,7 @@ func (h dingDingRobotHandler) DoHandler(ctx context.Context, taskInfo types.Task
 
 	err = d.SendMessage(content.Content, at...)
 	if err != nil {
-		logx.Errorf("dingDingRobotHandler SendMessage err:%v", err)
-		return
+		return errors.Wrap(err, "dingDingRobotHandler SendMessage err")
 	}
 	return nil
 }

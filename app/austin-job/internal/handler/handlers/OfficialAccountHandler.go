@@ -6,6 +6,7 @@ import (
 	"austin-go/app/austin-common/types"
 	"austin-go/app/austin-support/utils/accountUtils"
 	"context"
+	"github.com/pkg/errors"
 	"github.com/silenceper/wechat/v2"
 	"github.com/silenceper/wechat/v2/cache"
 	offConfig "github.com/silenceper/wechat/v2/officialaccount/config"
@@ -30,8 +31,7 @@ func (h officialAccountHandler) DoHandler(ctx context.Context, taskInfo types.Ta
 
 	err = accountUtils.GetAccount(ctx, taskInfo.SendAccount, &acc)
 	if err != nil {
-		logx.Errorf(" officialAccountHandler 解析账号错误  获取账号错误:%s err:%v", taskInfo, err)
-		return
+		return errors.Wrap(err, "officialAccountHandler get account err")
 	}
 	wc := wechat.NewWechat()
 	cacheImpl := cache.NewMemory()

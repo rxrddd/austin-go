@@ -22,7 +22,7 @@ func NewTask(taskInfo types.TaskInfo, svcCtx *svc.ServiceContext) *Task {
 func (t Task) Run(ctx context.Context) {
 	// 0. 丢弃消息 根据redis配置丢弃某个模板的所有消息
 	if services.NewDiscardMessageService(t.svcCtx).IsDiscard(ctx, &t.TaskInfo) {
-		logx.WithContext(ctx).Infof("消息被丢弃,taskInfo : %s", t.TaskInfo)
+		logx.WithContext(ctx).Infow("消息被丢弃", logx.Field("task_info", t.TaskInfo))
 		return
 	}
 	// 1. 屏蔽消息 比如夜间屏蔽,夜间屏蔽次日八点发送
