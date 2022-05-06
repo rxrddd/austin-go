@@ -2,7 +2,6 @@ package result
 
 import (
 	"austin-go/common/xerr"
-	"fmt"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -75,10 +74,4 @@ func AuthHttpResult(r *http.Request, w http.ResponseWriter, resp interface{}, er
 
 		httpx.WriteJson(w, http.StatusUnauthorized, Error(errcode, errmsg))
 	}
-}
-
-//http 参数错误返回
-func ParamErrorResult(r *http.Request, w http.ResponseWriter, err error) {
-	errMsg := fmt.Sprintf("%s ,%s", xerr.MapErrMsg(xerr.REUQEST_PARAM_ERROR), err.Error())
-	httpx.WriteJson(w, http.StatusBadRequest, Error(xerr.REUQEST_PARAM_ERROR, errMsg))
 }

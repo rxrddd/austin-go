@@ -30,7 +30,7 @@ func (l deduplicationRuleService) Duplication(ctx context.Context, taskInfo *typ
 	one, err := repo.NewMessageTemplateRepo(l.svcCtx.Config.CacheRedis).
 		One(ctx, taskInfo.MessageTemplateId)
 	if err != nil {
-		logx.Errorw("deduplicationRuleService 查询模板错误 err", logx.Field("err", err.Error()))
+		logx.Errorw("deduplicationRuleService 查询模板错误 err", logx.Field("err", err))
 		return
 	}
 	if one.DeduplicationConfig == "" {
@@ -40,7 +40,7 @@ func (l deduplicationRuleService) Duplication(ctx context.Context, taskInfo *typ
 	var deduplicationConfig = make(map[string]structs.DeduplicationConfigItem)
 	err = jsonx.Unmarshal([]byte(one.DeduplicationConfig), &deduplicationConfig)
 	if err != nil {
-		logx.Errorw("deduplicationRuleService jsonx.Unmarshal err", logx.Field("err", err.Error()))
+		logx.Errorw("deduplicationRuleService jsonx.Unmarshal err", logx.Field("err", err))
 		return
 	}
 	if len(deduplicationConfig) <= 0 {
@@ -56,7 +56,7 @@ func (l deduplicationRuleService) Duplication(ctx context.Context, taskInfo *typ
 		}
 		err := exec.Deduplication(ctx, taskInfo, value)
 		if err != nil {
-			logx.Errorw("exec.Deduplication err", logx.Field("err", err.Error()))
+			logx.Errorw("exec.Deduplication err", logx.Field("err", err))
 		}
 	}
 

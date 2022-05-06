@@ -76,7 +76,10 @@ func (h officialAccountHandler) DoHandler(ctx context.Context, taskInfo types.Ta
 			Data:       params,
 		})
 		if err != nil {
-			logx.Errorf("officialAccountHandler send msg err:%v receiver:%s templateId:%s", err, receiver, templateId)
+			logx.Errorw("officialAccountHandler send msg",
+				logx.Field("err", err),
+				logx.Field("receiver", receiver),
+				logx.Field("templateId", templateId))
 			continue
 		}
 		msgIds = append(msgIds, msgID)

@@ -15,7 +15,7 @@ require (
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.392
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms v1.0.392
 	github.com/wanghuiyt/ding v0.0.1
-	github.com/zeromicro/go-zero v1.3.4-0.20220504095258-aa5118c2aaa0
+	github.com/zeromicro/go-zero v1.3.4-0.20220506071346-d0a59b13a699
 	google.golang.org/grpc v1.46.0
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df

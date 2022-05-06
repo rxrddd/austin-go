@@ -52,7 +52,7 @@ func (l shieldService) Shield(ctx context.Context, taskInfo *types.TaskInfo) {
 				return nil
 			})
 			if err != nil {
-				logx.WithContext(ctx).Errorw("夜间屏蔽(次日早上9点发送)模式 写入redis错误", logx.Field("task_info", taskInfo), logx.Field("err", err.Error()))
+				logx.WithContext(ctx).Errorw("夜间屏蔽(次日早上9点发送)模式 写入redis错误", logx.Field("task_info", taskInfo), logx.Field("err", err))
 			}
 		}
 		taskInfo.Receiver = []string{} //置空发送人

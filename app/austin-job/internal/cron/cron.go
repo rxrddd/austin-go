@@ -39,7 +39,7 @@ func (l *cronTask) nightShieldHandler() {
 	for {
 		length, err := l.svcCtx.RedisClient.LlenCtx(ctx, services.NightShieldButNextDaySendKey)
 		if err != nil {
-			logx.Errorw("nightShieldHandler LlenCtx", logx.Field("err", err.Error()))
+			logx.Errorw("nightShieldHandler LlenCtx", logx.Field("err", err))
 			break
 		}
 		if length <= 0 {
@@ -48,13 +48,13 @@ func (l *cronTask) nightShieldHandler() {
 
 		pop, err := l.svcCtx.RedisClient.LpopCtx(ctx, services.NightShieldButNextDaySendKey)
 		if err != nil {
-			logx.Errorw("nightShieldHandler LpopCtx", logx.Field("err", err.Error()))
+			logx.Errorw("nightShieldHandler LpopCtx", logx.Field("err", err))
 			continue
 		}
 		var taskInfo types.TaskInfo
 		err = jsonx.Unmarshal([]byte(pop), &taskInfo)
 		if err != nil {
-			logx.Errorw("nightShieldHandler jsonx.Unmarshal", logx.Field("err", err.Error()))
+			logx.Errorw("nightShieldHandler jsonx.Unmarshal", logx.Field("err", err))
 			continue
 		}
 		channel := channelType.TypeCodeEn[taskInfo.SendChannel]
@@ -64,7 +64,7 @@ func (l *cronTask) nightShieldHandler() {
 		if err != nil {
 			logx.Errorw("nightShieldHandler Publish",
 				logx.Field("taskInfo", taskInfo),
-				logx.Field("err", err.Error()))
+				logx.Field("err", err))
 		}
 
 	}

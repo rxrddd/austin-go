@@ -53,7 +53,7 @@ func (l *RabbitTask) onMassage(delivery amqp.Delivery) {
 		if err != nil {
 			logx.WithContext(ctx).Errorw("submit task err",
 				logx.Field("内容", string(delivery.Body)),
-				logx.Field("err", err.Error()))
+				logx.Field("err", err))
 		}
 	}
 }

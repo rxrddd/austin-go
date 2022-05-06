@@ -35,7 +35,7 @@ func (t Task) Run(ctx context.Context) {
 	if len(t.TaskInfo.Receiver) > 0 {
 		err := handlers.GetHandler(t.TaskInfo.SendChannel).DoHandler(ctx, t.TaskInfo)
 		if err != nil {
-			logx.Errorw("DoHandler err", logx.Field("task_info", t.TaskInfo), logx.Field("err", err.Error()))
+			logx.Errorw("DoHandler err", logx.Field("task_info", t.TaskInfo), logx.Field("err", err))
 		}
 	}
 }
