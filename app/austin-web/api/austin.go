@@ -26,7 +26,6 @@ func main() {
 
 	handler.RegisterHandlers(server, ctx)
 	logx.DisableStat()
-	logx.Disable()
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()

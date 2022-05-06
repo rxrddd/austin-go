@@ -40,7 +40,6 @@ func main() {
 	dbx.InitDb(c.Mysql)
 
 	logx.DisableStat()
-	logx.Disable()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()
