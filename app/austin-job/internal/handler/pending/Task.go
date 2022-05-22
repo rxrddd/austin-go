@@ -33,11 +33,21 @@ func (t Task) Run(ctx context.Context) {
 	}
 	// 3. 真正发送消息
 	if len(t.TaskInfo.Receiver) > 0 {
-		err := handlers.GetHandler(t.TaskInfo.SendChannel).DoHandler(ctx, t.TaskInfo)
+		err := t.doHandler(ctx, handlers.GetHandler(t.TaskInfo.SendChannel))
 		if err != nil {
 			logx.Errorw("DoHandler err", logx.Field("task_info", t.TaskInfo), logx.Field("err", err))
 		}
 	}
+}
+
+func (t Task) doHandler(ctx context.Context, handler handlers.IHandler) error {
+	//处理限流
+
+	err := handler.DoHandler(ctx, t.TaskInfo)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 type TaskRun interface {

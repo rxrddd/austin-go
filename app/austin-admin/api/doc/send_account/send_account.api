@@ -1,0 +1,48 @@
+type SendAccountAddReq struct {
+    Title string `json:"title"`
+    Config string `json:"config"`
+    SendChannel int `json:"send_channel"`
+}
+
+
+type SendAccountEditReq struct {
+    ID int64 `json:"id"`
+    Title string `json:"title"`
+    Config string `json:"config"`
+    SendChannel int `json:"send_channel"`
+}
+
+
+type SendAccountItem struct {
+    ID int64 `json:"id"`
+    Title string `json:"title"`
+    Config string `json:"config"`
+    SendChannel int `json:"send_channel"`
+}
+
+
+type SendAccountListReq struct {
+    Title string `form:"title,optional"`
+    SendChannel string `form:"send_channel,optional"`
+}
+
+type SendAccountListResp struct {
+    Items []SendAccountItem `json:"items"`
+}
+
+
+@server(
+    group: send_account
+    prefix: api
+)
+
+service api {
+    @handler SendAccountAddHandler
+    post /send_account/add (SendAccountAddReq)
+
+    @handler SendAccountEditHandler
+    post /send_account/edit (SendAccountEditReq)
+
+    @handler SendAccountListHandler
+    get /send_account/list (SendAccountListReq) returns (SendAccountListResp)
+}

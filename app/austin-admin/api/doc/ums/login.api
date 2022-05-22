@@ -1,0 +1,27 @@
+type LoginReq struct {
+    Username string `json:"username"`
+    Password string `json:"password"`
+}
+
+
+type LoginResp struct {
+    Token string `json:"token"`
+    UserInfo UserInfo `json:"userInfo"`
+}
+type UserInfo struct {
+    UserID int64 `json:"userId,string"`
+    UserName string `json:"userName"`
+    Dashboard string `json:"dashboard"`
+    Role []string `json:"role"`
+}
+
+
+@server(
+    group: ums/login
+    prefix: api
+)
+
+service api {
+    @handler LoginHandler
+    post /login (LoginReq) returns (LoginResp)
+}

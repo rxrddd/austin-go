@@ -1,0 +1,14 @@
+type VersionResp {
+    Version string `json:"version"`
+}
+
+@server(
+    group: common/version
+    middleware: Auth
+    prefix: api/demo
+)
+
+service api {
+    @handler VersionHandler
+    get /ver returns (VersionResp)
+}

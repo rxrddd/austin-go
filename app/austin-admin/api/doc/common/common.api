@@ -1,0 +1,13 @@
+syntax = "v1"
+
+info(
+    title: "全局公用结构体"
+)
+
+
+type Page {
+    Current int `form:"page,optional"`
+    PageSize int `form:"pageSize,optional"`
+    SortField string `form:"sort_field,optional"`
+    Order string `form:"order,optional"`
+}
