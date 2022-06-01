@@ -9,6 +9,9 @@ import (
 type IHandler interface {
 	DoHandler(ctx context.Context, taskInfo types.TaskInfo) (err error)
 }
+type ILimit interface {
+	Limit(ctx context.Context, taskInfo types.TaskInfo) (err error)
+}
 
 var handlerHolder = map[int]IHandler{
 	channelType.Sms:                NewSmsHandler(),

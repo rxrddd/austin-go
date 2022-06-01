@@ -42,7 +42,11 @@ func (t Task) Run(ctx context.Context) {
 
 func (t Task) doHandler(ctx context.Context, handler handlers.IHandler) error {
 	//处理限流
-
+	if v, ok := handler.(handlers.ILimit); ok {
+		if err := v.Limit(ctx, t.TaskInfo); err != nil {
+			logx.Errorw("limit err", logx.Field("err", err))
+		}
+	}
 	err := handler.DoHandler(ctx, t.TaskInfo)
 	if err != nil {
 		return err
