@@ -4,23 +4,17 @@ import (
 	"austin-go/app/austin-common/dto/account"
 	"austin-go/app/austin-common/dto/content_model"
 	"austin-go/app/austin-common/types"
-	"austin-go/app/austin-job/internal/handler/ratelimitutil"
 	"austin-go/app/austin-support/utils/accountUtils"
 	"context"
 	"github.com/pkg/errors"
-	"golang.org/x/time/rate"
 	"gopkg.in/gomail.v2"
-	"time"
 )
 
 type emailHandler struct {
-	limiter *ratelimitutil.RateLimitUtil
 }
 
 func NewEmailHandler() IHandler {
-	return emailHandler{
-		limiter: ratelimitutil.NewRateLimitUtil(rate.NewLimiter(rate.Every(time.Second), 3), ratelimitutil.RequestRateLimit),
-	}
+	return emailHandler{}
 }
 func (h emailHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (err error) {
 	var content content_model.EmailContentModel
@@ -31,6 +25,7 @@ func (h emailHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (e
 	err = accountUtils.GetAccount(ctx, taskInfo.SendAccount, &acc)
 	if err != nil {
 		return errors.Wrap(err, "emailHandler get account err")
+		return
 	}
 
 	m.SetHeader("From", m.FormatAddress(acc.Username, "官方"))
@@ -46,8 +41,4 @@ func (h emailHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (e
 		return errors.Wrap(err, "emailHandler DialAndSend err")
 	}
 	return nil
-}
-
-func (h emailHandler) Limit(ctx context.Context, taskInfo types.TaskInfo) (err error) {
-	return h.limiter.Limit(ctx, taskInfo)
 }
