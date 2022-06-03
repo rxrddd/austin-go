@@ -25,7 +25,6 @@ func (h emailHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (e
 	err = accountUtils.GetAccount(ctx, taskInfo.SendAccount, &acc)
 	if err != nil {
 		return errors.Wrap(err, "emailHandler get account err")
-		return
 	}
 
 	m.SetHeader("From", m.FormatAddress(acc.Username, "官方"))
