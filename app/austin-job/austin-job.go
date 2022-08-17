@@ -2,6 +2,7 @@ package main
 
 import (
 	"austin-go/app/austin-job/internal/config"
+	"austin-go/app/austin-job/internal/handler/handlers"
 	"austin-go/app/austin-job/internal/listen"
 	"austin-go/app/austin-job/internal/svc"
 	"austin-go/common/dbx"
@@ -28,6 +29,7 @@ func main() {
 
 	logx.DisableStat()
 	dbx.InitDb(c.Mysql)
+	handlers.InitHandler(ctx)
 	defer group.Stop()
 	group.Start()
 }

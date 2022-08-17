@@ -3,10 +3,12 @@ package mqs
 import (
 	"austin-go/app/austin-common/enums/channelType"
 	"austin-go/app/austin-common/enums/messageType"
+	"austin-go/app/austin-common/model"
 	"austin-go/app/austin-common/taskUtil"
 	"austin-go/app/austin-common/types"
 	"austin-go/app/austin-job/internal/handler/pending"
 	"austin-go/app/austin-job/internal/svc"
+	"austin-go/common/dbx"
 	"context"
 	"fmt"
 	"github.com/streadway/amqp"
@@ -33,6 +35,9 @@ func (l *RabbitTask) Start() {
 	for _, groupId := range taskUtil.GetAllGroupIds() {
 		_ = l.svcCtx.MqClient.Subscribe(fmt.Sprintf("austin.biz.%s", groupId), l.onMassage)
 	}
+
+	_ = l.svcCtx.MqClient.Subscribe("sms.record", l.onMassage)
+
 	select {}
 }
 
@@ -46,7 +51,6 @@ func (l *RabbitTask) onMassage(delivery amqp.Delivery) {
 	var taskList []types.TaskInfo
 	_ = jsonx.Unmarshal(delivery.Body, &taskList)
 	for _, taskInfo := range taskList {
-		logx.WithContext(ctx).Infow("消息接收成功,开始消费", logx.Field("task_info", taskInfo))
 		channel := channelType.TypeCodeEn[taskInfo.SendChannel]
 		msgType := messageType.TypeCodeEn[taskInfo.MsgType]
 		err := pending.Submit(ctx, fmt.Sprintf("%s.%s", channel, msgType), pending.NewTask(taskInfo, l.svcCtx))
@@ -56,4 +60,11 @@ func (l *RabbitTask) onMassage(delivery amqp.Delivery) {
 				logx.Field("err", err))
 		}
 	}
+}
+
+func (l *RabbitTask) handlerSmsRecord(delivery amqp.Delivery) {
+	ctx := context.Background()
+	var msg []model.SmsRecord
+	_ = jsonx.Unmarshal(delivery.Body, &msg)
+	dbx.GetDb(ctx).Create(msg)
 }

@@ -1,11 +1,12 @@
 package script
 
 import (
+	"austin-go/app/austin-common/model"
 	"context"
 )
 
 type SmsScript interface {
-	Send(ctx context.Context, sms SmsParams) (err error)
+	Send(ctx context.Context, sms SmsParams) (smsRecord []*model.SmsRecord, err error)
 }
 
 type SmsParams struct {
