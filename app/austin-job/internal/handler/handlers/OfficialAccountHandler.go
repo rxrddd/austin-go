@@ -88,5 +88,6 @@ func (h officialAccountHandler) DoHandler(ctx context.Context, taskInfo types.Ta
 	return nil
 }
 func (h officialAccountHandler) getRealWxMpTemplateId(messageTemplateId int64) string {
+	//todo::根据业务需要查询真实的微信模板ID
 	return cast.ToString(messageTemplateId)
 }
