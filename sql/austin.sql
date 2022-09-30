@@ -46,6 +46,7 @@ CREATE TABLE `message_template` (
   `created` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updated` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
   `deduplication_config` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '限流配置',
+  `template_sn` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '发送消息的模版ID',
   PRIMARY KEY (`id`),
   KEY `idx_channel` (`send_channel`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='消息模板信息';

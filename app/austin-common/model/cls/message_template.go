@@ -12,6 +12,7 @@ var ClsMessageTemplate = struct {
 	IDType         string
 	SendChannel    string
 	TemplateType   string
+	TemplateSn     string
 	MsgType        string
 	ShieldType     string
 	MsgContent     string
@@ -36,6 +37,7 @@ var ClsMessageTemplate = struct {
 	IDType:         "id_type",
 	SendChannel:    "send_channel",
 	TemplateType:   "template_type",
+	TemplateSn:     "template_sn",
 	MsgType:        "msg_type",
 	ShieldType:     "shield_type",
 	MsgContent:     "msg_content",
