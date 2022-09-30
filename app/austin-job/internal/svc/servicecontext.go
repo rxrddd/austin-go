@@ -3,6 +3,7 @@ package svc
 import (
 	"austin-go/app/austin-job/internal/config"
 	"austin-go/common/mq"
+
 	"github.com/zeromicro/go-zero/core/stores/redis"
 )
 
@@ -18,8 +19,11 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		panic(err)
 	}
 	return &ServiceContext{
-		Config:      c,
-		MqClient:    client,
-		RedisClient: redis.New(c.CacheRedis[0].Host),
+		Config:   c,
+		MqClient: client,
+		RedisClient: redis.New(c.CacheRedis[0].Host, func(r *redis.Redis) {
+			r.Type = c.CacheRedis[0].Type
+			r.Pass = c.CacheRedis[0].Pass
+		}),
 	}
 }
