@@ -13,6 +13,8 @@ var (
 	handlerHolder map[int]IHandler
 )
 
+const flowControlEmail = "flow_control_email"
+
 // SetUp 初始化所有handler
 func SetUp(svcCtx *svc.ServiceContext) {
 	once.Do(func() {

@@ -18,7 +18,7 @@ type emailHandler struct {
 
 func NewEmailHandler(svcCtx *svc.ServiceContext) IHandler {
 	return emailHandler{
-		limit: limit.NewTokenLimiter(3, 10, svcCtx.RedisClient, "email"),
+		limit: limit.NewTokenLimiter(3, 10, svcCtx.RedisClient, flowControlEmail),
 	}
 }
 
