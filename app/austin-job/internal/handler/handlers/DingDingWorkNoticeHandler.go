@@ -7,6 +7,7 @@ import (
 )
 
 type dingDingWorkNoticeHandler struct {
+	BaseHandler
 }
 
 func NewDingDingWorkNoticeHandler() IHandler {

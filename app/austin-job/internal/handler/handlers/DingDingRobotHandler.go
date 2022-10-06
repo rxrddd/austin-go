@@ -12,6 +12,7 @@ import (
 )
 
 type dingDingRobotHandler struct {
+	BaseHandler
 }
 
 const SendAll = "@all"

@@ -20,6 +20,7 @@ const colorSep = "|" //以|分割颜色
 
 //公众号订阅消息
 type officialAccountHandler struct {
+	BaseHandler
 }
 
 func NewOfficialAccountHandler() IHandler {
@@ -84,7 +85,7 @@ func (h officialAccountHandler) DoHandler(ctx context.Context, taskInfo types.Ta
 		}
 		msgIds = append(msgIds, msgID)
 	}
-	logx.Info("officialAccountHandler send success msgIds:%v", msgIds)
+	logx.Infow("officialAccountHandler send success", logx.Field("msgIds", msgIds))
 	return nil
 }
 func (h officialAccountHandler) getRealWxMpTemplateId(messageTemplateId int64) string {

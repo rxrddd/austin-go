@@ -8,7 +8,7 @@ import (
 	"github.com/zeromicro/go-zero/core/service"
 )
 
-//返回所有消费者
+// Mqs 返回所有消费者
 func Mqs(svcCtx *svc.ServiceContext) []service.Service {
 
 	ctx := context.Background()
