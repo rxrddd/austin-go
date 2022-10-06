@@ -6,14 +6,14 @@ import (
 	"austin-go/app/austin-common/types"
 	"austin-go/app/austin-support/utils/accountUtils"
 	"context"
+	"strings"
+
 	"github.com/pkg/errors"
 	"github.com/silenceper/wechat/v2"
 	"github.com/silenceper/wechat/v2/cache"
 	offConfig "github.com/silenceper/wechat/v2/officialaccount/config"
 	"github.com/silenceper/wechat/v2/officialaccount/message"
-	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
-	"strings"
 )
 
 const colorSep = "|" //以|分割颜色
@@ -48,9 +48,8 @@ func (h officialAccountHandler) DoHandler(ctx context.Context, taskInfo types.Ta
 		Cache:          cacheImpl,
 	}
 
-	messageTemplateId := taskInfo.MessageTemplateId
 	subscribe := wc.GetOfficialAccount(cfg).GetTemplate()
-	templateId := h.getRealWxMpTemplateId(messageTemplateId)
+	templateId := content.TemplateId
 	url := content.Url
 	params := make(map[string]*message.TemplateDataItem, len(content.Map))
 
@@ -87,8 +86,4 @@ func (h officialAccountHandler) DoHandler(ctx context.Context, taskInfo types.Ta
 	}
 	logx.Infow("officialAccountHandler send success", logx.Field("msgIds", msgIds))
 	return nil
-}
-func (h officialAccountHandler) getRealWxMpTemplateId(messageTemplateId int64) string {
-	//todo::根据业务需要查询真实的微信模板ID
-	return cast.ToString(messageTemplateId)
 }

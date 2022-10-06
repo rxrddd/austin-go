@@ -4,13 +4,15 @@ import (
 	"austin-go/app/austin-common/model"
 	"austin-go/app/austin-common/taskUtil"
 	"austin-go/app/austin-common/types"
+
 	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/jsonx"
 )
 
 type OfficialAccountsContentModel struct {
-	Map map[string]string `json:"map"`
-	Url string            `json:"url"`
+	Map        map[string]string `json:"map"`         //消息数据
+	Url        string            `json:"url"`         // 消息的URL地址
+	TemplateId string            `json:"template_sn"` // 发送消息的模版ID
 }
 
 func NewOfficialAccountsContentModel() *OfficialAccountsContentModel {
@@ -26,5 +28,6 @@ func (d OfficialAccountsContentModel) BuilderContent(messageTemplate model.Messa
 		content.Url = taskUtil.GenerateUrl(v, messageTemplate.ID, messageTemplate.TemplateType)
 	}
 	content.Map = cast.ToStringMapString(variables["map"])
+	content.TemplateId = messageTemplate.TemplateSn
 	return content
 }
