@@ -10,7 +10,6 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/limit"
 	"gopkg.in/gomail.v2"
-	"time"
 )
 
 type emailHandler struct {
@@ -24,7 +23,7 @@ func NewEmailHandler(svcCtx *svc.ServiceContext) IHandler {
 }
 
 func (h emailHandler) Limit(ctx context.Context, taskInfo types.TaskInfo) bool {
-	return h.limit.AllowN(time.Now(), len(taskInfo.Receiver))
+	return h.limit.Allow()
 }
 
 func (h emailHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (err error) {
