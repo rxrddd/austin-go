@@ -2,6 +2,7 @@ package main
 
 import (
 	"austin-go/app/austin-job/internal/config"
+	"austin-go/app/austin-job/internal/handler/handlers"
 	"austin-go/app/austin-job/internal/listen"
 	"austin-go/app/austin-job/internal/svc"
 	"austin-go/common/dbx"
@@ -16,6 +17,7 @@ var configFile = flag.String("f", "etc/austin-job.yaml", "the config file")
 
 func main() {
 	flag.Parse()
+	logx.DisableStat()
 
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
@@ -26,8 +28,10 @@ func main() {
 		group.Add(mq)
 	}
 
-	logx.DisableStat()
+	handlers.SetUp(ctx)
 	dbx.InitDb(c.Mysql)
+
 	defer group.Stop()
 	group.Start()
+
 }

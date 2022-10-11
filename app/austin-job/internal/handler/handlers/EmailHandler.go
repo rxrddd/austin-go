@@ -4,18 +4,28 @@ import (
 	"austin-go/app/austin-common/dto/account"
 	"austin-go/app/austin-common/dto/content_model"
 	"austin-go/app/austin-common/types"
+	"austin-go/app/austin-job/internal/svc"
 	"austin-go/app/austin-support/utils/accountUtils"
 	"context"
 	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/limit"
 	"gopkg.in/gomail.v2"
 )
 
 type emailHandler struct {
+	limit *limit.TokenLimiter
 }
 
-func NewEmailHandler() IHandler {
-	return emailHandler{}
+func NewEmailHandler(svcCtx *svc.ServiceContext) IHandler {
+	return emailHandler{
+		limit: limit.NewTokenLimiter(3, 10, svcCtx.RedisClient, flowControlEmail),
+	}
 }
+
+func (h emailHandler) Limit(ctx context.Context, taskInfo types.TaskInfo) bool {
+	return h.limit.Allow()
+}
+
 func (h emailHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (err error) {
 	var content content_model.EmailContentModel
 	getContentModel(taskInfo.ContentModel, &content)

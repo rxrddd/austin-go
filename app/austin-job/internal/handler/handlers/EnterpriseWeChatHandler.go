@@ -8,6 +8,7 @@ import (
 )
 
 type enterpriseWeChatHandler struct {
+	BaseHandler
 }
 
 func NewEnterpriseWeChatHandler() IHandler {

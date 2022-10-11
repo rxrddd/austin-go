@@ -9,6 +9,7 @@ import (
 )
 
 type smsHandler struct {
+	BaseHandler
 }
 
 func NewSmsHandler() IHandler {
