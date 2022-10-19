@@ -21,7 +21,7 @@ func NewTencentSms() SmsScript {
 
 const httpProfileEndpoint = "sms.tencentcloudapi.com"
 
-//腾讯云短信发送实现  未测试
+// Send 腾讯云短信发送实现  未测试
 func (t TencentSms) Send(ctx context.Context, smsParams SmsParams) (err error) {
 	var acc account.TencentSmsAccount
 	err = accountUtils.GetAccount(ctx, smsParams.SendAccount, &acc)

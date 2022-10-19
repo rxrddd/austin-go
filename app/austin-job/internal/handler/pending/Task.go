@@ -25,7 +25,7 @@ func (t Task) Run(ctx context.Context) {
 		logx.WithContext(ctx).Infow("消息被丢弃", logx.Field("task_info", t.TaskInfo))
 		return
 	}
-	// 1. 屏蔽消息 比如夜间屏蔽,夜间屏蔽次日八点发送
+	// 1.屏蔽消息 1. 夜间屏蔽直接丢弃, 2.夜间屏蔽次日八点发送
 	services.NewShieldService(t.svcCtx).Shield(ctx, &t.TaskInfo)
 	// 2.平台通用去重 1. N分钟相同内容去重, 2. 一天内N次相同渠道去重
 	if len(t.TaskInfo.Receiver) > 0 {

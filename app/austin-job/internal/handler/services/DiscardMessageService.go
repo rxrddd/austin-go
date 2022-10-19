@@ -19,11 +19,11 @@ func NewDiscardMessageService(svcCtx *svc.ServiceContext) *discardMessageService
 	return &discardMessageService{svcCtx: svcCtx}
 }
 
-//根据redis配置丢弃某个模板的所有消息
+// IsDiscard 根据redis配置丢弃某个模板的所有消息
 func (l discardMessageService) IsDiscard(ctx context.Context, taskInfo *types.TaskInfo) bool {
 	discardMessageTemplateIds, err := l.svcCtx.RedisClient.SmembersCtx(ctx, discardMessageKey)
 	if err != nil {
-		logx.Errorf("discardMessageService smembers err:%v", err)
+		logx.Errorw("discardMessageService smembers ", logx.Field("err", err))
 		return false
 	}
 	if len(discardMessageTemplateIds) == 0 {
