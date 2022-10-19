@@ -25,7 +25,7 @@ func (s slideWindowLimitService) LimitFilter(_ context.Context, duplication stru
 		todayEnd, _ := time.ParseInLocation("2006-01-02", time.Now().Format("2006-01-02"), time.Local)
 		todayEndUnix := todayEnd.AddDate(0, 0, 1).Unix()
 		period := todayEndUnix - time.Now().Unix()
-		l := limit.NewPeriodLimit(int(period), param.Num, s.svcCtx.RedisClient, "slideWindowLimitServicePrefix")
+		l := limit.NewPeriodLimit(int(period), param.Num, s.svcCtx.RedisClient, slideWindowLimitServicePrefix)
 		code, err := l.Take(key)
 		if err != nil {
 			logx.Errorf("slideWindowLimitService Take err:%v", err)
