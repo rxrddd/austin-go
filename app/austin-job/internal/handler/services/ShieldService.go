@@ -29,6 +29,10 @@ func NewShieldService(svcCtx *svc.ServiceContext) *shieldService {
 }
 
 func (l shieldService) Shield(ctx context.Context, taskInfo *types.TaskInfo) {
+	if taskInfo.ShieldType == NightNoShield {
+		return
+	}
+
 	if isNight() {
 		if taskInfo.ShieldType == NightShield {
 			//夜间屏蔽
