@@ -215,7 +215,7 @@ func (m *MessagingClient) SubscribeToExchange(exchangeName string, exchangeType 
 	msgs, err := ch.Consume(
 		queue.Name, // queue
 		"",         // consumer
-		true,       // auto-ack
+		false,      // auto-ack
 		false,      // exclusive
 		false,      // no-local
 		false,      // no-wait
@@ -251,7 +251,7 @@ func (m *MessagingClient) Subscribe(queueName string, handlerFunc func(amqp.Deli
 	msgs, err := ch.Consume(
 		queue.Name, // queue
 		"",         // consumer
-		true,       // auto-ack
+		false,      // auto-ack
 		false,      // exclusive
 		false,      // no-local
 		false,      // no-wait

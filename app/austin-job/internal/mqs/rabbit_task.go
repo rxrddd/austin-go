@@ -56,4 +56,5 @@ func (l *RabbitTask) onMassage(delivery amqp.Delivery) {
 				logx.Field("err", err))
 		}
 	}
+	delivery.Ack(false)
 }
