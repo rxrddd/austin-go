@@ -1,8 +1,6 @@
-Name: austin-consumer
-Host: 0.0.0.0
-Port: 8888
+Name: austin-job
 Rabbit:
-  URL: amqp://admin:admin@127.0.0.1:5672
+  URL: amqp://guest:guest@127.0.0.1:5672
 Mysql:
   Dsn: root:123456@tcp(127.0.0.1:3306)/austin?charset=utf8mb4&parseTime=True&loc=Local
   MaxIdleConns: 100
@@ -13,5 +11,5 @@ Redis:
   Pass: root
 CacheRedis:
   - Host: 127.0.0.1:6379
-    Pass:
+    Pass: "123456"
     Type: node
