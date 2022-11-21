@@ -1,16 +1,19 @@
 package types
 
 type TaskInfo struct {
-	MessageTemplateId int64       `json:"messageTemplateId"`
-	BusinessId        int64       `json:"businessId"`
-	Receiver          []string    `json:"receiver"` //先去重
-	IdType            int         `json:"idType"`
-	SendChannel       int         `json:"sendChannel"`
-	TemplateType      int         `json:"templateType"`
-	MsgType           int         `json:"msgType"`
-	ShieldType        int         `json:"shieldType"`
-	ContentModel      interface{} `json:"contentModel"`
-	SendAccount       int         `json:"sendAccount"`
+	MessageTemplateId int64        `json:"messageTemplateId"`
+	BusinessId        int64        `json:"businessId"`
+	Receiver          []string     `json:"receiver"` //先去重
+	IdType            int          `json:"idType"`
+	SendChannel       int          `json:"sendChannel"`
+	TemplateType      int          `json:"templateType"`
+	MsgType           int          `json:"msgType"`
+	ShieldType        int          `json:"shieldType"`
+	ContentModel      interface{}  `json:"contentModel"`
+	SendAccount       int          `json:"sendAccount"`                           //发消息使用的账号
+	TemplateSn        string       `json:"templateSn"`                            // 发送消息的模版ID
+	SmsChannel        string       `gorm:"column:sms_channel" json:"sms_channel"` // 短信渠道 send_channel=30的时候有用
+	MessageParam      MessageParam `json:"messageParamList"`
 }
 
 type ContentModel struct {

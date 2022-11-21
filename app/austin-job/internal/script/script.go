@@ -1,16 +1,13 @@
 package script
 
 import (
+	"austin-go/app/austin-common/types"
 	"context"
 )
 
 type SmsScript interface {
-	Send(ctx context.Context, sms SmsParams) (err error)
+	Send(ctx context.Context, taskInfo types.TaskInfo) (err error)
 }
 
-type SmsParams struct {
-	MessageTemplateId int64    `json:"messageTemplateId"`
-	Phones            []string `json:"phones"`
-	Content           string   `json:"content"`
-	SendAccount       int      `json:"sendAccount"`
-}
+const TENCENT = "tencent" //腾讯云
+const ALIYUN = "aliyun"   //阿里云

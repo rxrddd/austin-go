@@ -25,7 +25,7 @@ func (s SmsContentModel) BuilderContent(messageTemplate model.MessageTemplate, m
 	var content SmsContentModel
 	_ = jsonx.Unmarshal([]byte(messageTemplate.MsgContent), &content)
 	newVariables := getStringVariables(variables)
-	content.Content = taskUtil.ReplaceByMap(content.Content, newVariables)
+	//content.Content = taskUtil.ReplaceByMap(content.Content, newVariables)
 	if v, ok := newVariables["url"]; ok && v != "" {
 		content.Url = taskUtil.GenerateUrl(v, messageTemplate.ID, messageTemplate.TemplateType)
 	}

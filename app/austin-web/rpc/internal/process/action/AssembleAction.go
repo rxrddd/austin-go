@@ -44,6 +44,8 @@ func (p AssembleAction) Process(ctx context.Context, sendTaskModel *types.SendTa
 			ShieldType:        messageTemplate.ShieldType,
 			ContentModel:      contentModel.BuilderContent(messageTemplate, param),
 			SendAccount:       messageTemplate.SendAccount,
+			TemplateSn:        messageTemplate.TemplateSn,
+			MessageParam:      param,
 		}
 
 		newTaskList = append(newTaskList, curTask)
