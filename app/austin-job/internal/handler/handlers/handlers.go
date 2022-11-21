@@ -19,7 +19,7 @@ const flowControlEmail = "flow_control_email"
 func SetUp(svcCtx *svc.ServiceContext) {
 	once.Do(func() {
 		handlerHolder = map[int]IHandler{
-			channelType.Sms:                NewSmsHandler(),
+			channelType.Sms:                NewSmsHandler(svcCtx),
 			channelType.Email:              NewEmailHandler(svcCtx),
 			channelType.OfficialAccounts:   NewOfficialAccountHandler(),
 			channelType.EnterpriseWeChat:   NewEnterpriseWeChatHandler(),

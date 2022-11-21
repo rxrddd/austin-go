@@ -3,6 +3,8 @@ package mqs
 import (
 	"austin-go/app/austin-common/enums/channelType"
 	"austin-go/app/austin-common/enums/messageType"
+	"austin-go/app/austin-common/model"
+	"austin-go/app/austin-common/repo"
 	"austin-go/app/austin-common/taskUtil"
 	"austin-go/app/austin-common/types"
 	"austin-go/app/austin-job/internal/handler/pending"
@@ -33,6 +35,8 @@ func (l *RabbitTask) Start() {
 	for _, groupId := range taskUtil.GetAllGroupIds() {
 		_ = l.svcCtx.MqClient.Subscribe(fmt.Sprintf("austin.biz.%s", groupId), l.onMassage)
 	}
+	_ = l.svcCtx.MqClient.Subscribe("sms-record", l.createSmsRecord)
+
 	select {}
 }
 
@@ -55,6 +59,19 @@ func (l *RabbitTask) onMassage(delivery amqp.Delivery) {
 				logx.Field("内容", string(delivery.Body)),
 				logx.Field("err", err))
 		}
+	}
+	delivery.Ack(false)
+}
+
+func (l *RabbitTask) createSmsRecord(delivery amqp.Delivery) {
+
+	var list []model.SmsRecord
+	_ = jsonx.Unmarshal(delivery.Body, &list)
+	err := repo.NewSmsRecordRepo().BatchCreate(context.Background(), list)
+	if err != nil {
+		logx.WithContext(context.Background()).Errorw("创建消息记录异常",
+			logx.Field("内容", string(delivery.Body)),
+			logx.Field("err", err))
 	}
 	delivery.Ack(false)
 }

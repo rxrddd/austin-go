@@ -5,25 +5,28 @@ import (
 	"austin-go/app/austin-job/internal/script"
 	"austin-go/app/austin-job/internal/script/aliyun"
 	"austin-go/app/austin-job/internal/script/tencent"
+	"austin-go/app/austin-job/internal/svc"
 	"context"
 	"fmt"
 	"github.com/pkg/errors"
 )
 
 type smsHandler struct {
+	svcCtx *svc.ServiceContext
 	BaseHandler
 }
 
-func NewSmsHandler() IHandler {
-	return &smsHandler{}
-}
-
-var sender = map[string]script.SmsScript{
-	script.TENCENT: tencent.NewTencentSms(),
-	script.ALIYUN:  aliyun.NewAliyunSms(),
+func NewSmsHandler(svcCtx *svc.ServiceContext) IHandler {
+	return &smsHandler{
+		svcCtx: svcCtx,
+	}
 }
 
 func (h smsHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (err error) {
+	sender := map[string]script.SmsScript{
+		script.TENCENT: tencent.NewTencentSms(h.SendSuccess),
+		script.ALIYUN:  aliyun.NewAliyunSms(h.SendSuccess),
+	}
 	var curSender script.SmsScript
 	var ok bool
 	if curSender, ok = sender[taskInfo.SmsChannel]; !ok {
@@ -34,4 +37,7 @@ func (h smsHandler) DoHandler(ctx context.Context, taskInfo types.TaskInfo) (err
 		return errors.Wrap(err, "smsHandler send err")
 	}
 	return nil
+}
+func (h smsHandler) SendSuccess(msg []byte) {
+	_ = h.svcCtx.MqClient.Publish(msg, "sms-record")
 }
