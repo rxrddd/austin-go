@@ -4,9 +4,12 @@
 
 austin项目的golang版本
 
+> v1版本
+#### github地址：[https://github.com/rxrddd/austin-go](https://github.com/rxrddd/austin-go)
+#### gitee地址：[https://gitee.com/AbelZou/austin-go](https://gitee.com/AbelZou/austin-go)
 
-#### github地址:`https://github.com/rxrddd/austin-go`
-#### gitee地址:`https://gitee.com/AbelZou/austin-go`
+> v2版本(基于kratos重新做了一个版本)
+#### github地址：[https://github.com/rxrddd/austin-v2](https://github.com/rxrddd/austin-v2)
 
 #### 项目描述
 
